@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Dashboard - FreelanceHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#007BFF',
+                        dark: '#0D1B2A',
+                        'primary-hover': '#0056b3',
+                        'light-blue': '#E3F2FD'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+        }
+        
+        .glass-form {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+        }
+        
+        .glass-input {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .glass-input:focus {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(0, 123, 255, 0.5);
+        }
+
+        /* Mobile menu styles */
+        .mobile-menu {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 via-blue-100 to-blue-200 min-h-screen">
+    <!-- Navigation -->
+    <nav class="glass-effect shadow-sm border-b border-gray-200/30 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <h1 class="text-xl font-bold text-primary">Obra</h1>
+                    <span class="hidden sm:block ml-4 text-sm text-gray-600">Client Dashboard</span>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <button class="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary-hover transition-colors text-sm font-medium">
+                        Post New Job
+                    </button>
+                    <button class="text-gray-600 hover:text-gray-800">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5-5-5h5v-12"></path>
+                        </svg>
+                    </button>
+                    <div class="flex items-center space-x-2">
+                        <img src="../client/icons/client.png" alt="Profile" class="w-8 h-8 rounded-full">
+                        <span class="text-sm font-medium text-gray-700">Rhenz Estrera</span>
+                    </div>
+                    <a href="../login.html" class="text-gray-600 hover:text-gray-800 text-sm">Logout</a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-600 hover:text-gray-800">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="mobile-menu md:hidden absolute top-16 left-0 w-full bg-white/95 backdrop-blur-lg border-b border-gray-200/30 z-50">
+            <div class="px-4 py-4 space-y-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                        <img src="../client/icons/client.png" alt="Profile" class="w-8 h-8 rounded-full">
+                        <span class="text-sm font-medium text-gray-700">Rhenz Estrera</span>
+                    </div>
+                    <a href="/public/login.html" class="text-gray-600 hover:text-gray-800 text-sm">Logout</a>
+                </div>
+                <button class="w-full bg-primary text-white px-4 py-2 rounded-md hover:bg-primary-hover transition-colors text-sm font-medium">
+                    Post New Job
+                </button>
+                <div class="border-t border-gray-200/30 pt-4">
+                    <span class="text-sm text-gray-600">Client Dashboard</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
+        <!-- Welcome Section -->
+        <div class="mb-6 sm:mb-8">
+            <h1 class="text-2xl sm:text-3xl font-bold text-dark">Welcome back, Rhenz!</h1>
+            <p class="text-gray-600 mt-2 text-sm sm:text-base">Manage your projects and find the perfect talent for your business.</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-6 sm:mb-8">
+            <div class="glass-card p-4 sm:p-6 rounded-lg">
+                <div class="flex items-center">
+                    <div class="p-2 bg-blue-100/50 rounded-lg">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <div class="ml-3 sm:ml-4">
+                        <p class="text-xs sm:text-sm font-medium text-gray-600">Active Projects</p>
+                        <p class="text-lg sm:text-2xl font-bold text-gray-900">5</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card p-4 sm:p-6 rounded-lg">
+                <div class="flex items-center">
+                    <div class="p-2 bg-green-100/50 rounded-lg">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                    </div>
+                    <div class="ml-3 sm:ml-4">
+                        <p class="text-xs sm:text-sm font-medium text-gray-600">Hired Freelancers</p>
+                        <p class="text-lg sm:text-2xl font-bold text-gray-900">12</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card p-4 sm:p-6 rounded-lg">
+                <div class="flex items-center">
+                    <div class="p-2 bg-purple-100/50 rounded-lg">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <div class="ml-3 sm:ml-4">
+                        <p class="text-xs sm:text-sm font-medium text-gray-600">Completed</p>
+                        <p class="text-lg sm:text-2xl font-bold text-gray-900">23</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card p-4 sm:p-6 rounded-lg">
+                <div class="flex items-center">
+                    <div class="p-2 bg-red-100/50 rounded-lg">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                        </svg>
+                    </div>
+                    <div class="ml-3 sm:ml-4">
+                        <p class="text-xs sm:text-sm font-medium text-gray-600">Total Spent</p>
+                        <p class="text-lg sm:text-2xl font-bold text-gray-900">Php 45,230</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+            <!-- Active Projects -->
+            <div class="lg:col-span-2">
+                <div class="glass-card rounded-lg">
+                    <div class="p-4 sm:p-6 border-b border-gray-200/30 flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-3 sm:space-y-0">
+                        <h2 class="text-lg sm:text-xl font-semibold text-gray-900">Active Projects</h2>
+                        <button class="w-full sm:w-auto bg-primary text-white px-4 py-2 rounded-md hover:bg-primary-hover transition-colors text-sm">
+                            Post New Job
+                        </button>
+                    </div>
+                    <div class="p-4 sm:p-6 space-y-4">
+                        <div class="glass-effect rounded-lg p-4 hover:shadow-lg transition-shadow">
+                            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-2 space-y-2 sm:space-y-0">
+                                <h3 class="font-semibold text-gray-900 text-sm sm:text-base">E-commerce Platform Redesign</h3>
+                                <span class="bg-green-100/50 text-green-800 text-xs font-medium px-2 py-1 rounded w-fit">In Progress</span>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-3">Complete redesign of our e-commerce platform with modern UI/UX</p>
+                            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-3 space-y-1 sm:space-y-0">
+                                <span class="text-primary font-semibold text-sm sm:text-base">Php 5,000</span>
+                                <span class="text-sm text-gray-500">Due: Feb 15, 2024</span>
+                            </div>
+                            <div class="flex items-center">
+                                <img src="/placeholder.svg?height=24&width=24" alt="Freelancer" class="w-6 h-6 rounded-full mr-2">
+                                <span class="text-sm text-gray-600">John Doe</span>
+                            </div>
+                        </div>
+
+                        <div class="glass-effect rounded-lg p-4 hover:shadow-lg transition-shadow">
+                            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-2 space-y-2 sm:space-y-0">
+                                <h3 class="font-semibold text-gray-900 text-sm sm:text-base">Mobile App Development</h3>
+                                <span class="bg-yellow-100/50 text-yellow-800 text-xs font-medium px-2 py-1 rounded w-fit">Pending Review</span>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-3">iOS and Android app for our fitness tracking service</p>
+                            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-3 space-y-1 sm:space-y-0">
+                                <span class="text-primary font-semibold text-sm sm:text-base">Php 8,500</span>
+                                <span class="text-sm text-gray-500">Due: Mar 1, 2024</span>
+                            </div>
+                            <div class="flex items-center">
+                                <img src="/placeholder.svg?height=24&width=24" alt="Freelancer" class="w-6 h-6 rounded-full mr-2">
+                                <span class="text-sm text-gray-600">Maria Garcia</span>
+                            </div>
+                        </div>
+
+                        <div class="glass-effect rounded-lg p-4 hover:shadow-lg transition-shadow">
+                            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-2 space-y-2 sm:space-y-0">
+                                <h3 class="font-semibold text-gray-900 text-sm sm:text-base">Content Marketing Strategy</h3>
+                                <span class="bg-blue-100/50 text-blue-800 text-xs font-medium px-2 py-1 rounded w-fit">Starting Soon</span>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-3">Comprehensive content strategy and blog post creation</p>
+                            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-3 space-y-1 sm:space-y-0">
+                                <span class="text-primary font-semibold text-sm sm:text-base">Php 2,200</span>
+                                <span class="text-sm text-gray-500">Due: Feb 28, 2024</span>
+                            </div>
+                            <div class="flex items-center">
+                                <img src="/placeholder.svg?height=24&width=24" alt="Freelancer" class="w-6 h-6 rounded-full mr-2">
+                                <span class="text-sm text-gray-600">Alex Chen</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="space-y-6">
+                <!-- Quick Post Job -->
+                <div class="glass-card rounded-lg">
+                    <div class="p-4 sm:p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Quick Post Job</h3>
+                        <form class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Job Title</label>
+                                <input type="text" class="glass-input w-full px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="e.g. Website Development">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Budget</label>
+                                <input type="text" class="glass-input w-full px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="e.g. $1,000 - $5,000">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                                <select class="glass-input w-full px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                    <option>Web Development</option>
+                                    <option>Mobile Development</option>
+                                    <option>Design</option>
+                                    <option>Writing</option>
+                                    <option>Marketing</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="w-full bg-primary text-white py-2 px-4 rounded-md hover:bg-primary-hover transition-colors">
+                                Post Job
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Recent Hires -->
+                <div class="glass-card rounded-lg">
+                    <div class="p-4 sm:p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Recent Hires</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center p-3 rounded-lg glass-effect">
+                                <img src="/placeholder.svg?height=40&width=40" alt="Freelancer" class="w-10 h-10 rounded-full mr-3">
+                                <div class="flex-1 min-w-0">
+                                    <p class="font-medium text-gray-900 text-sm truncate">John Doe</p>
+                                    <p class="text-gray-600 text-xs truncate">Full Stack Developer</p>
+                                </div>
+                                <div class="text-right flex-shrink-0">
+                                    <div class="flex text-yellow-400">
+                                        <svg class="w-3 h-3 fill-current" viewBox="0 0 20 20">
+                                            <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                                        </svg>
+                                        <svg class="w-3 h-3 fill-current" viewBox="0 0 20 20">
+                                            <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                                        </svg>
+                                        <svg class="w-3 h-3 fill-current" viewBox="0 0 20 20">
+                                            <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                                        </svg>
+                                        <svg class="w-3 h-3 fill-current" viewBox="0 0 20 20">
+                                            <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                                        </svg>
+                                        <svg class="w-3 h-3 fill-current" viewBox="0 0 20 20">
+                                            <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                                        </svg>
+                                    </div>
+                                    <p class="text-xs text-gray-500">4.9</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center p-3 rounded-lg glass-effect">
+                                <img src="/placeholder.svg?height=40&width=40" alt="Freelancer" class="w-10 h-10 rounded-full mr-3">
+                                <div class="flex-1 min-w-0">
+                                    <p class="font-medium text-gray-900 text-sm truncate">Maria Garcia</p>
+                                    <p class="text-gray-600 text-xs truncate">UI/UX Designer</p>
+                                </div>
+                                <div class="text-right flex-shrink-0">
+                                    <div class="flex text-yellow-400">
+                                        <svg class="w-3 h-3 fill-current" viewBox="0 0 20 20">
+                                            <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                                        </svg>
+                                        <svg class="w-3 h-3 fill-current" viewBox="0 0 20 20">
+                                            <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                                        </svg>
+                                        <svg class="w-3 h-3 fill-current" viewBox="0 0 20 20">
+                                            <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                                        </svg>
+                                        <svg class="w-3 h-3 fill-current" viewBox="0 0 20 20">
+                                            <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                                        </svg>
+                                        <svg class="w-3 h-3 fill-current" viewBox="0 0 20 20">
+                                            <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                                        </svg>
+                                    </div>
+                                    <p class="text-xs text-gray-500">4.8</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center p-3 rounded-lg glass-effect">
+                                <img src="/placeholder.svg?height=40&width=40" alt="Freelancer" class="w-10 h-10 rounded-full mr-3">
+                                <div class="flex-1 min-w-0">
+                                    <p class="font-medium text-gray-900 text-sm truncate">Alex Chen</p>
+                                    <p class="text-gray-600 text-xs truncate">Content Writer</p>
+                                </div>
+                                <div class="text-right flex-shrink-0">
+                                    <div class="flex text-yellow-400">
+                                        <svg class="w-3 h-3 fill-current" viewBox="0 0 20 20">
+                                            <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                                        </svg>
+                                        <svg class="w-3 h-3 fill-current" viewBox="0 0 20 20">
+                                            <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                                        </svg>
+                                        <svg class="w-3 h-3 fill-current" viewBox="0 0 20 20">
+                                            <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                                        </svg>
+                                        <svg class="w-3 h-3 fill-current" viewBox="0 0 20 20">
+                                            <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                                        </svg>
+                                        <svg class="w-3 h-3 fill-current" viewBox="0 0 20 20">
+                                            <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                                        </svg>
+                                    </div>
+                                    <p class="text-xs text-gray-500">4.7</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="w-full mt-4 text-primary hover:text-primary-hover text-sm font-medium">
+                            View All Freelancers
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu functionality
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!mobileMenu.contains(e.target) && !mobileMenuButton.contains(e.target)) {
+                mobileMenu.classList.remove('open');
+            }
+        });
+    </script>
+</body>
+</html>

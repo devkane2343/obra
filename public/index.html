@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Obra - Connect Talent with Opportunity</title>
+    <link rel="icon" href="icons/omlogo.png" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#021534', // deep blue
+                        secondary: '#8bafd7', // soft blue
+                        accent: '#d62222', // red
+                        tertiary: '#d7e3fc', // very light blue
+                        dark: '#2b283b', // dark gray/blue
+                        light: '#ffffff', // white
+                        'primary-hover': '#19306b', // slightly lighter than primary
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .glass-button {
+            background: rgba(215, 227, 252, 0.25); /* tertiary */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(139, 175, 215, 0.18); /* secondary */
+            box-shadow: 0 8px 32px 0 rgba(2, 21, 52, 0.15); /* primary */
+        }
+        
+        .glass-button:hover {
+            background: rgba(215, 227, 252, 0.35); /* tertiary */
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px 0 rgba(2, 21, 52, 0.25); /* primary */
+        }
+        
+        .glass-card {
+            background: rgba(215, 227, 252, 0.15); /* tertiary */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(139, 175, 215, 0.18); /* secondary */
+            box-shadow: 0 8px 32px 0 rgba(2, 21, 52, 0.15); /* primary */
+        }
+        
+        .glass-card:hover {
+            background: rgba(215, 227, 252, 0.25); /* tertiary */
+            transform: translateY(-4px);
+            box-shadow: 0 16px 48px 0 rgba(2, 21, 52, 0.25); /* primary */
+        }
+        
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .smooth-transition {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .fade-out {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Enhanced gradient backgrounds */
+        .gradient-bg {
+            background: linear-gradient(135deg, #021534 0%, #8bafd7 100%); /* primary to secondary */
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #021534 0%, #8bafd7 100%); /* primary to secondary */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .gradient-border {
+            background: linear-gradient(135deg, #021534 0%, #8bafd7 100%); /* primary to secondary */
+            padding: 2px;
+            border-radius: 8px;
+        }
+        
+        .gradient-border .content {
+            background: #ffffff; /* light */
+            border-radius: 6px;
+            padding: 1rem;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-50 via-blue-50 to-white text-gray-800 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-gradient-to-r from-white/90 via-blue-50/90 to-gray-100/90 backdrop-blur-md shadow-sm border-b border-gray-100/50 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <img src="icons/obratext.png" alt="Obra" class="h-8 object-contain" />
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="login.html" class="text-gray-600 hover:text-primary transition-colors duration-300">Login</a>
+                    <a href="../public/signup.html" class="glass-button text-primary px-4 py-2 rounded-lg smooth-transition">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-blue-100/80 via-gray-100/80 to-white/80 py-20 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-blue-400/20 via-gray-400/20 to-blue-600/20"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-transparent via-blue-200/10 to-gray-200/10"></div>
+        <div class="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50" style="background-image: url('icons/bluebg.png');"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center">
+                <h1 class="text-5xl md:text-6xl font-bold text-dark mb-6 animate-float" id="animated-heading">
+                    Looking for Skilled
+                    <span class="gradient-text">Workers?</span>
+                </h1>
+                <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+                    "Whether you're a client in need of talent or a professional seeking opportunities, this is your platform to thrive. Let's shape a successful future together."
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="login.html" class="glass-button text-primary px-8 py-4 rounded-lg text-lg font-semibold smooth-transition shadow-lg">
+                        Find Work
+                    </a>
+                    <a href="login.html" class="glass-button text-primary px-8 py-4 rounded-lg text-lg font-semibold smooth-transition shadow-lg">
+                        Hire Worker
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-gradient-to-br from-transparent via-blue-50/50 to-gray-50/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-dark mb-4">Why Choose Obra?</h2>
+                <p class="text-xl text-gray-600">Everything you need to succeed in the freelance economy</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass-card p-8 rounded-xl smooth-transition bg-gradient-to-br from-blue-50/80 to-gray-50/80">
+                    <div class="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-dark mb-4">Quality Projects</h3>
+                    <p class="text-gray-600">Access to premium projects from verified clients worldwide. Build your portfolio with meaningful work.</p>
+                </div>
+
+                <div class="glass-card p-8 rounded-xl smooth-transition bg-gradient-to-br from-gray-50/80 to-blue-50/80">
+                    <div class="w-12 h-12 bg-gradient-to-br from-gray-700 to-blue-800 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-dark mb-4">Secure Payments</h3>
+                    <p class="text-gray-600">Protected transactions with escrow services. Get paid on time, every time, with our secure payment system.</p>
+                </div>
+
+                <div class="glass-card p-8 rounded-xl smooth-transition bg-gradient-to-br from-blue-50/80 to-gray-50/80">
+                    <div class="w-12 h-12 bg-gradient-to-br from-blue-700 to-gray-800 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-dark mb-4">National Network</h3>
+                    <p class="text-gray-600">Connect with professionals and clients from around the world. Expand your reach and opportunities.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="bg-gradient-to-r from-blue-800/90 via-blue-900/90 to-gray-900/90 py-20 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-blue-600/30 via-gray-600/30 to-blue-800/30"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-transparent via-blue-700/20 to-gray-700/20"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h2 class="text-4xl font-bold text-white mb-6">Ready to Get Started?</h2>
+            <p class="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+                Join thousands of professionals who are already building their careers on Obra
+            </p>
+            <a href="login.html" class="glass-button text-primary bg-white/90 px-8 py-4 rounded-lg text-lg font-semibold smooth-transition shadow-lg">
+                Join Obra Today
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-br from-gray-900/90 via-dark/90 to-gray-900/90 backdrop-blur-md text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4 gradient-text">Obra</h3>
+                    <p class="text-gray-400">Connecting talent with opportunity worldwide.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">For Freelancers</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors duration-300">Find Work</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-300">Build Profile</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-300">Success Stories</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">For Clients</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors duration-300">Post Jobs</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-300">Find Talent</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-300">Enterprise</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors duration-300">Help Center</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-300">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-300">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 Obra. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Heading animation
+        const heading = document.getElementById('animated-heading');
+        const headings = [
+            'Looking for Skilled <span class="gradient-text">Workers?</span>',
+            'Are you a  <span class="gradient-text">Skilled Worker?</span>'
+        ];
+        let currentIndex = 0;
+        
+        function changeHeading() {
+            // Fade out
+            heading.style.transition = 'opacity 0.5s ease-out, transform 0.5s ease-out';
+            heading.classList.add('fade-out');
+            
+            setTimeout(() => {
+                // Change content
+                heading.innerHTML = headings[currentIndex];
+                
+                // Fade in
+                heading.classList.remove('fade-out');
+                heading.classList.add('fade-in');
+                
+                // Switch to next heading
+                currentIndex = (currentIndex + 1) % headings.length;
+            }, 500);
+            
+            // Schedule next change
+            setTimeout(changeHeading, 5000);
+        }
+        
+        // Start the animation after 5 seconds
+        setTimeout(changeHeading, 5000);
+    </script>
+</body>
+</html>

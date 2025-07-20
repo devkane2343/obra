@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms and Conditions - Obra</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#007BFF',
+                        dark: '#0D1B2A',
+                        'primary-hover': '#0056b3',
+                        'light-blue': '#E3F2FD'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .glass-button {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+        
+        .glass-button:hover {
+            background: rgba(255, 255, 255, 0.35);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.45);
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+        
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-4px);
+            box-shadow: 0 16px 48px 0 rgba(31, 38, 135, 0.45);
+        }
+        
+        .smooth-transition {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .gradient-border {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            padding: 2px;
+            border-radius: 8px;
+        }
+        
+        .gradient-border .content {
+            background: white;
+            border-radius: 6px;
+            padding: 1rem;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-50 via-blue-50 to-white text-gray-800 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-gradient-to-r from-white/90 via-blue-50/90 to-gray-100/90 backdrop-blur-md shadow-sm border-b border-gray-100/50 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold gradient-text">Obra</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="login.html" class="text-gray-600 hover:text-primary transition-colors duration-300">Login</a>
+                    <a href="signup.html" class="glass-button text-primary px-4 py-2 rounded-lg smooth-transition">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-blue-100/80 via-gray-100/80 to-white/80 py-20 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-blue-400/20 via-gray-400/20 to-blue-600/20"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-transparent via-blue-200/10 to-gray-200/10"></div>
+        <div class="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50" style="background-image: url('icons/bluebg.png');"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center">
+                <h1 class="text-5xl md:text-6xl font-bold text-dark mb-6">
+                    📜 Terms and Conditions
+                </h1>
+                <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+                    Welcome to our platform. By using this site, you agree to follow these Terms and Conditions.
+                </p>
+                <div class="flex items-center justify-center space-x-4 text-sm text-gray-500">
+                    <span>Effective Date: January 1, 2025</span>
+                    <span>•</span>
+                    <span>Last Updated: January 1, 2025</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Terms and Conditions Content -->
+    <section class="py-20 bg-gradient-to-br from-transparent via-blue-50/50 to-gray-50/50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section 1: Use of the Platform -->
+            <div class="glass-card p-8 rounded-xl smooth-transition bg-gradient-to-br from-blue-50/80 to-gray-50/80 mb-8">
+                <h2 class="text-2xl font-bold text-dark mb-6 flex items-center">
+                    <span class="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center text-white text-sm font-bold mr-4">1</span>
+                    Use of the Platform
+                </h2>
+                <p class="text-gray-700 mb-4">You agree to:</p>
+                <ul class="space-y-3 text-gray-700">
+                    <li class="flex items-start">
+                        <span class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                        <span>Provide accurate, truthful information</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                        <span>Use the platform for legal and ethical purposes only</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                        <span>Respect other users' privacy and rights</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                        <span>Not use fake certificates, misleading profiles, or spam</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Section 2: Account Termination -->
+            <div class="glass-card p-8 rounded-xl smooth-transition bg-gradient-to-br from-gray-50/80 to-blue-50/80 mb-8">
+                <h2 class="text-2xl font-bold text-dark mb-6 flex items-center">
+                    <span class="w-8 h-8 bg-gradient-to-br from-gray-700 to-blue-800 rounded-lg flex items-center justify-center text-white text-sm font-bold mr-4">2</span>
+                    Account Termination
+                </h2>
+                <p class="text-gray-700 mb-4">We may suspend or terminate your account if:</p>
+                <ul class="space-y-3 text-gray-700">
+                    <li class="flex items-start">
+                        <span class="w-2 h-2 bg-gray-700 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                        <span>You violate these terms</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="w-2 h-2 bg-gray-700 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                        <span>You engage in fraud, abuse, or illegal activity</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="w-2 h-2 bg-gray-700 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                        <span>You misuse the platform for personal or commercial harm</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Section 3: User Responsibilities -->
+            <div class="glass-card p-8 rounded-xl smooth-transition bg-gradient-to-br from-blue-50/80 to-gray-50/80 mb-8">
+                <h2 class="text-2xl font-bold text-dark mb-6 flex items-center">
+                    <span class="w-8 h-8 bg-gradient-to-br from-blue-700 to-gray-800 rounded-lg flex items-center justify-center text-white text-sm font-bold mr-4">3</span>
+                    User Responsibilities
+                </h2>
+                <p class="text-gray-700 mb-4">Clients and workers are responsible for:</p>
+                <ul class="space-y-3 text-gray-700 mb-4">
+                    <li class="flex items-start">
+                        <span class="w-2 h-2 bg-blue-700 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                        <span>Negotiating and agreeing on the terms of the work</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="w-2 h-2 bg-blue-700 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                        <span>Delivering services or payments as agreed</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="w-2 h-2 bg-blue-700 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                        <span>Keeping communication professional</span>
+                    </li>
+                </ul>
+                <p class="text-gray-700 leading-relaxed">
+                    We are not liable for disputes, missed payments, or project issues — but we encourage fair resolution.
+                </p>
+            </div>
+
+            <!-- Section 4: Intellectual Property -->
+            <div class="glass-card p-8 rounded-xl smooth-transition bg-gradient-to-br from-gray-50/80 to-blue-50/80 mb-8">
+                <h2 class="text-2xl font-bold text-dark mb-6 flex items-center">
+                    <span class="w-8 h-8 bg-gradient-to-br from-gray-700 to-blue-800 rounded-lg flex items-center justify-center text-white text-sm font-bold mr-4">4</span>
+                    Intellectual Property
+                </h2>
+                <p class="text-gray-700 leading-relaxed">
+                    All content, logos, and assets on the platform are owned by us unless stated otherwise. Do not copy, reproduce, or distribute them without permission.
+                </p>
+            </div>
+
+            <!-- Section 5: Limitation of Liability -->
+            <div class="glass-card p-8 rounded-xl smooth-transition bg-gradient-to-br from-blue-50/80 to-gray-50/80 mb-8">
+                <h2 class="text-2xl font-bold text-dark mb-6 flex items-center">
+                    <span class="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center text-white text-sm font-bold mr-4">5</span>
+                    Limitation of Liability
+                </h2>
+                <p class="text-gray-700 mb-4">We are not liable for:</p>
+                <ul class="space-y-3 text-gray-700 mb-4">
+                    <li class="flex items-start">
+                        <span class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                        <span>Data loss due to user error or breach</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                        <span>Any dispute or damages between users</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                        <span>Downtime or service interruptions</span>
+                    </li>
+                </ul>
+                <p class="text-gray-700 font-semibold">Use the platform at your own risk.</p>
+            </div>
+
+            <!-- Section 6: Changes to These Terms -->
+            <div class="glass-card p-8 rounded-xl smooth-transition bg-gradient-to-br from-gray-50/80 to-blue-50/80 mb-8">
+                <h2 class="text-2xl font-bold text-dark mb-6 flex items-center">
+                    <span class="w-8 h-8 bg-gradient-to-br from-gray-700 to-blue-800 rounded-lg flex items-center justify-center text-white text-sm font-bold mr-4">6</span>
+                    Changes to These Terms
+                </h2>
+                <p class="text-gray-700 leading-relaxed">
+                    We may update these Terms and the Privacy Policy at any time. Users will be notified of significant changes via email or in-app.
+                </p>
+            </div>
+
+            <!-- Section 7: Governing Law -->
+            <div class="glass-card p-8 rounded-xl smooth-transition bg-gradient-to-br from-blue-50/80 to-gray-50/80 mb-8">
+                <h2 class="text-2xl font-bold text-dark mb-6 flex items-center">
+                    <span class="w-8 h-8 bg-gradient-to-br from-blue-700 to-gray-800 rounded-lg flex items-center justify-center text-white text-sm font-bold mr-4">7</span>
+                    Governing Law
+                </h2>
+                <p class="text-gray-700 leading-relaxed">
+                    These terms are governed by the laws of the Philippines. Any legal disputes must be settled in local jurisdiction courts.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-br from-gray-900/90 via-dark/90 to-gray-900/90 backdrop-blur-md text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4 gradient-text">Obra</h3>
+                    <p class="text-gray-400">Connecting talent with opportunity worldwide.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">For Freelancers</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors duration-300">Find Work</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-300">Build Profile</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-300">Success Stories</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">For Clients</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors duration-300">Post Jobs</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-300">Find Talent</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-300">Enterprise</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors duration-300">Help Center</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-300">Contact Us</a></li>
+                        <li><a href="policy.html" class="hover:text-white transition-colors duration-300">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 Obra. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

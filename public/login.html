@@ -123,117 +123,55 @@
             <a href="index.html" class="text-gray-600 hover:text-gray-800 text-sm">← Back to Home</a>
         </div>
     </div>
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
-    <script>
-        function getBackendUrl(path) {
-            if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
-                return `http://localhost:3000${path}`; // Change 3000 to your backend port if different
-            }
-            return `https://your-vercel-backend.vercel.app${path}`; // Replace with your actual Vercel backend URL
-        }
-        let oauthInProgress = false;
+    <script type="module">
+  import { auth } from './firebase-config.js';
+  import {
+    signInWithEmailAndPassword,
+    GoogleAuthProvider,
+    signInWithPopup,
+    FacebookAuthProvider
+  } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js';
 
-        // --- Google OAuth ---
-        function handleGoogleCredentialResponse(response) {
-            try {
-                const payload = JSON.parse(atob(response.credential.split('.')[1]));
-                const email = payload.email;
-                // Check with backend if user exists
-                fetch(getBackendUrl('/check-user'), {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email })
-                })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.exists) {
-                        window.location.href = 'index.html';
-                    } else {
-                        window.location.href = 'signup.html';
-                    }
-                })
-                .catch(() => {
-                    alert('Error checking user.');
-                });
-            } catch (e) {
-                alert('Google login failed. Please try again.');
-            }
-        }
-        function renderGoogleButton() {
-            const googleBtn = document.getElementById('googleSignInBtn');
-            if (!googleBtn) return;
-            googleBtn.addEventListener('click', function() {
-                if (oauthInProgress) return;
-                oauthInProgress = true;
-                google.accounts.id.prompt((notification) => {
-                    oauthInProgress = false;
-                });
-            });
-            window.onload = function() {
-                google.accounts.id.initialize({
-                    client_id: '94071956664-fg7al838nsc8dn2ikf6krtrfb5jc1t94.apps.googleusercontent.com',
-                    callback: handleGoogleCredentialResponse,
-                    ux_mode: 'popup',
-                });
-            };
-        }
+  // Email/Password Login
+  document.querySelector('form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      window.location.href = 'index.html';
+    } catch (error) {
+      alert('Login failed: ' + (error.message || error.code));
+    }
+  });
 
-        // --- Facebook OAuth ---
-        function initFacebookSDK() {
-            window.fbAsyncInit = function() {
-                FB.init({
-                    appId      : 'YOUR_FACEBOOK_APP_ID',
-                    cookie     : true,
-                    xfbml      : false,
-                    version    : 'v19.0'
-                });
-            };
-        }
-        function handleFacebookLogin() {
-            if (oauthInProgress) return;
-            oauthInProgress = true;
-            FB.login(function(response) {
-                if (response.authResponse) {
-                    FB.api('/me', {fields: 'name,email,picture'}, function(profile) {
-                        if (profile && profile.email) {
-                            // Check with backend if user exists
-                            fetch(getBackendUrl('/check-user'), {
-                                method: 'POST',
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify({ email: profile.email })
-                            })
-                            .then(res => res.json())
-                            .then(data => {
-                                if (data.exists) {
-                                    window.location.href = 'index.html';
-                                } else {
-                                    window.location.href = 'signup.html';
-                                }
-                            })
-                            .catch(() => {
-                                alert('Error checking user.');
-                            });
-                        } else {
-                            alert('Could not retrieve Facebook profile info.');
-                        }
-                    });
-                } else {
-                    alert('Facebook login was cancelled or failed.');
-                }
-            }, {scope: 'public_profile,email'});
-        }
-        function renderFacebookButton() {
-            const fbBtn = document.getElementById('facebookSignInBtn');
-            if (!fbBtn) return;
-            fbBtn.addEventListener('click', handleFacebookLogin);
-        }
+  // Google Sign-In
+  const googleBtn = document.getElementById('googleSignInBtn');
+  if (googleBtn) {
+    googleBtn.addEventListener('click', async function() {
+      const provider = new GoogleAuthProvider();
+      try {
+        await signInWithPopup(auth, provider);
+        window.location.href = 'index.html';
+      } catch (error) {
+        alert('Google login failed: ' + (error.message || error.code));
+      }
+    });
+  }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            renderGoogleButton();
-            renderFacebookButton();
-            initFacebookSDK();
-        });
-    </script>
+  // Facebook Sign-In
+  const fbBtn = document.getElementById('facebookSignInBtn');
+  if (fbBtn) {
+    fbBtn.addEventListener('click', async function() {
+      const provider = new FacebookAuthProvider();
+      try {
+        await signInWithPopup(auth, provider);
+        window.location.href = 'index.html';
+      } catch (error) {
+        alert('Facebook login failed: ' + (error.message || error.code));
+      }
+    });
+  }
+</script>
 </body>
 </html>

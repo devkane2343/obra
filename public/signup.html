@@ -20,6 +20,12 @@
     </script>
     <link rel="stylesheet" href="style.css">
     <style>
+        body, html {
+            font-family: 'Lucida Sans', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans Regular', Geneva, Verdana, sans-serif;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Lucida Sans', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans Regular', Geneva, Verdana, 'Georgia', serif;
+        }
         .glass-effect {
             background: rgba(255, 255, 255, 0.25);
             backdrop-filter: blur(10px);
@@ -75,6 +81,17 @@
                 </button>
             </div>
 
+            <!-- OAuth Login Buttons -->
+            <div class="glass-effect rounded-lg shadow-lg p-6 mb-4 flex flex-col gap-3 fade-in">
+                <button id="googleSignInBtn" type="button" class="w-full flex items-center justify-center gap-2 bg-white border border-gray-300 rounded-md py-2 px-4 font-medium text-gray-700 hover:bg-gray-50 transition-colors shadow-sm">
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" class="h-5 w-5"> Continue with Google
+                </button>
+                <button id="facebookSignInBtn" type="button" class="w-full flex items-center justify-center gap-2 bg-blue-600 border border-blue-700 rounded-md py-2 px-4 font-medium text-white hover:bg-blue-700 transition-colors shadow-sm">
+                    <img src="https://www.svgrepo.com/show/475647/facebook-color.svg" alt="Facebook" class="h-5 w-5 bg-white rounded-full"> Continue with Facebook
+                </button>
+            </div>
+            <!-- End OAuth Login Buttons -->
+            
             <!-- Form -->
             <div class="glass-effect rounded-lg shadow-lg p-8 fade-in">
                 <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Sign Up</h2>
@@ -225,70 +242,159 @@
         </div>
     </div>
 
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
     <script>
         let currentUserType = 'client';
+        let oauthInProgress = false;
+        let oauthWelcomeTimeout;
 
+        // --- Google OAuth ---
+        function handleGoogleCredentialResponse(response) {
+            // Decode JWT to get user info
+            try {
+                const payload = JSON.parse(atob(response.credential.split('.')[1]));
+                const name = payload.name;
+                const email = payload.email;
+                const picture = payload.picture;
+                showWelcomeMessage({ name, email, picture, provider: 'Google' });
+            } catch (e) {
+                showError('Google login failed. Please try again.');
+            }
+        }
+
+        function renderGoogleButton() {
+            const googleBtn = document.getElementById('googleSignInBtn');
+            googleBtn.addEventListener('click', function() {
+                if (oauthInProgress) return;
+                oauthInProgress = true;
+                google.accounts.id.prompt((notification) => {
+                    if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+                        oauthInProgress = false;
+                        showError('Google login was cancelled or could not be displayed.');
+                    }
+                });
+            });
+            // Initialize Google Identity Services
+            window.onload = function() {
+                google.accounts.id.initialize({
+                    client_id: '94071956664-fg7al838nsc8dn2ikf6krtrfb5jc1t94.apps.googleusercontent.com', // TODO: Replace with your Google client ID
+                    callback: handleGoogleCredentialResponse,
+                    ux_mode: 'popup',
+                });
+            };
+        }
+
+        // --- Facebook OAuth ---
+        function initFacebookSDK() {
+            window.fbAsyncInit = function() {
+                FB.init({
+                    appId      : 'YOUR_FACEBOOK_APP_ID', // TODO: Replace with your Facebook App ID
+                    cookie     : true,
+                    xfbml      : false,
+                    version    : 'v19.0'
+                });
+            };
+        }
+        function handleFacebookLogin() {
+            if (oauthInProgress) return;
+            oauthInProgress = true;
+            FB.login(function(response) {
+                if (response.authResponse) {
+                    FB.api('/me', {fields: 'name,email,picture'}, function(profile) {
+                        if (profile && profile.email) {
+                            showWelcomeMessage({
+                                name: profile.name,
+                                email: profile.email,
+                                picture: profile.picture?.data?.url,
+                                provider: 'Facebook'
+                            });
+                        } else {
+                            showError('Could not retrieve Facebook profile info.');
+                        }
+                    });
+                } else {
+                    showError('Facebook login was cancelled or failed.');
+                }
+            }, {scope: 'public_profile,email'});
+        }
+        function renderFacebookButton() {
+            const fbBtn = document.getElementById('facebookSignInBtn');
+            fbBtn.addEventListener('click', handleFacebookLogin);
+        }
+
+        // --- Welcome Message & Error Handling ---
+        function showWelcomeMessage({ name, email, picture, provider }) {
+            oauthInProgress = false;
+            clearTimeout(oauthWelcomeTimeout);
+            const container = document.querySelector('.max-w-md');
+            container.innerHTML = `
+                <div class="glass-effect rounded-lg shadow-lg p-8 fade-in flex flex-col items-center text-center">
+                    <img src="${picture || ''}" alt="Profile Picture" class="w-20 h-20 rounded-full mb-4 border-4 border-primary shadow">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">Welcome, ${name}!</h2>
+                    <p class="text-gray-600 mb-2">Signed in with <span class="font-semibold">${provider}</span></p>
+                    <p class="text-gray-500 text-sm mb-4">${email}</p>
+                    <a href="index.html" class="mt-4 inline-block bg-primary text-white px-6 py-2 rounded-md hover:bg-primary-hover transition-colors font-medium">Go to Home</a>
+                </div>
+            `;
+            oauthWelcomeTimeout = setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 5000);
+        }
+        function showError(message) {
+            oauthInProgress = false;
+            clearTimeout(oauthWelcomeTimeout);
+            const container = document.querySelector('.max-w-md');
+            const prev = container.innerHTML;
+            container.innerHTML = `
+                <div class="glass-effect rounded-lg shadow-lg p-8 fade-in flex flex-col items-center text-center">
+                    <h2 class="text-xl font-bold text-red-600 mb-2">Error</h2>
+                    <p class="text-gray-700 mb-4">${message}</p>
+                    <button class="bg-primary text-white px-6 py-2 rounded-md hover:bg-primary-hover transition-colors font-medium" id="retryBtn">Back to Signup</button>
+                </div>
+            `;
+            document.getElementById('retryBtn').onclick = () => {
+                container.innerHTML = prev;
+                renderGoogleButton();
+                renderFacebookButton();
+            };
+        }
+
+        // --- Existing JS for form and UI ---
         function switchUserType(type) {
             currentUserType = type;
-            
             const clientToggle = document.getElementById('clientToggle');
             const workerToggle = document.getElementById('workerToggle');
             const clientField = document.getElementById('clientField');
             const workerField = document.getElementById('workerField');
             const workCategory = document.getElementById('workCategory');
             const specialization = document.getElementById('specialization');
-
             if (type === 'client') {
-                // Update toggle buttons
                 clientToggle.className = 'flex-1 py-2 px-4 text-sm font-medium rounded-md transition-all duration-200 bg-primary text-white shadow-sm';
                 workerToggle.className = 'flex-1 py-2 px-4 text-sm font-medium rounded-md transition-all duration-200 text-gray-500 hover:text-gray-700';
-                
-                // Show/hide fields with animation
                 clientField.classList.remove('hidden');
                 workerField.classList.add('hidden');
-                
-                // Set required attributes
                 workCategory.required = true;
                 specialization.required = false;
-                
-                // Add fade-in animation
-                setTimeout(() => {
-                    clientField.classList.add('fade-in');
-                }, 50);
-                
+                setTimeout(() => { clientField.classList.add('fade-in'); }, 50);
             } else {
-                // Update toggle buttons
                 workerToggle.className = 'flex-1 py-2 px-4 text-sm font-medium rounded-md transition-all duration-200 bg-primary text-white shadow-sm';
                 clientToggle.className = 'flex-1 py-2 px-4 text-sm font-medium rounded-md transition-all duration-200 text-gray-500 hover:text-gray-700';
-                
-                // Show/hide fields with animation
                 workerField.classList.remove('hidden');
                 clientField.classList.add('hidden');
-                
-                // Set required attributes
                 specialization.required = true;
                 workCategory.required = false;
-                
-                // Add fade-in animation
-                setTimeout(() => {
-                    workerField.classList.add('fade-in');
-                }, 50);
+                setTimeout(() => { workerField.classList.add('fade-in'); }, 50);
             }
         }
-
         function handleSubmit(event) {
             event.preventDefault();
-            
-            // Show loading state
             const submitText = document.getElementById('submitText');
             const loadingSpinner = document.getElementById('loadingSpinner');
             const submitButton = event.target.querySelector('button[type="submit"]');
-            
             submitText.textContent = 'Creating Account...';
             loadingSpinner.classList.remove('hidden');
             submitButton.disabled = true;
-            
-            // Collect form data
             const formData = new FormData(event.target);
             const data = {
                 userType: currentUserType,
@@ -297,46 +403,34 @@
                 password: formData.get('password'),
                 terms: formData.get('terms') === 'on'
             };
-            
-            // Add type-specific field
             if (currentUserType === 'client') {
                 data.workCategory = formData.get('workCategory');
             } else {
                 data.specialization = formData.get('specialization');
             }
-            
-            // Simulate API call delay
             setTimeout(() => {
-                console.log('Form Data Submitted:', data);
-                console.log('User Type:', currentUserType);
-                console.log('Full Form Data:', Object.fromEntries(formData));
-                
-                // Reset loading state
                 submitText.textContent = 'Account Created!';
                 loadingSpinner.classList.add('hidden');
-                
-                // Reset form after a delay
                 setTimeout(() => {
                     submitText.textContent = 'Create Account';
                     submitButton.disabled = false;
                     event.target.reset();
                 }, 2000);
-                
             }, 1500);
         }
-
-        // Add smooth focus effects
         document.addEventListener('DOMContentLoaded', function() {
             const inputs = document.querySelectorAll('input, select');
             inputs.forEach(input => {
                 input.addEventListener('focus', function() {
                     this.parentElement.classList.add('transform', 'scale-[1.02]');
                 });
-                
                 input.addEventListener('blur', function() {
                     this.parentElement.classList.remove('transform', 'scale-[1.02]');
                 });
             });
+            renderGoogleButton();
+            renderFacebookButton();
+            initFacebookSDK();
         });
     </script>
 </body>

@@ -5,3 +5,6 @@ Hexacode
 #d62222
 #2b283b
 #fffff
+
+Primary Font - Lucida Sans
+Secondary Font - Georgia

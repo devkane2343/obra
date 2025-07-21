@@ -124,13 +124,38 @@
         </div>
     </div>
     <script type="module">
-  import { auth } from './firebase-config.js';
+  import { auth, db } from './firebase-config.js';
   import {
     signInWithEmailAndPassword,
     GoogleAuthProvider,
     signInWithPopup,
     FacebookAuthProvider
   } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js';
+  import {
+    doc,
+    getDoc,
+    setDoc
+  } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js';
+
+  // Helper: Check if user doc exists, create if not, and redirect
+  async function handlePostLogin(user) {
+    const userRef = doc(db, 'users', user.uid);
+    const userSnap = await getDoc(userRef);
+    if (!userSnap.exists()) {
+      // First time: create user doc
+      await setDoc(userRef, {
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName || '',
+        provider: user.providerData[0]?.providerId || '',
+        createdAt: new Date()
+      });
+      window.location.href = 'signup2.html';
+    } else {
+      // Existing user
+      window.location.href = 'client/client-dashboard.html';
+    }
+  }
 
   // Email/Password Login
   document.querySelector('form').addEventListener('submit', async function(e) {
@@ -138,8 +163,8 @@
     const email = document.getElementById('loginEmail').value;
     const password = document.getElementById('loginPassword').value;
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      window.location.href = 'index.html';
+      const result = await signInWithEmailAndPassword(auth, email, password);
+      await handlePostLogin(result.user);
     } catch (error) {
       alert('Login failed: ' + (error.message || error.code));
     }
@@ -151,8 +176,8 @@
     googleBtn.addEventListener('click', async function() {
       const provider = new GoogleAuthProvider();
       try {
-        await signInWithPopup(auth, provider);
-        window.location.href = 'index.html';
+        const result = await signInWithPopup(auth, provider);
+        await handlePostLogin(result.user);
       } catch (error) {
         alert('Google login failed: ' + (error.message || error.code));
       }
@@ -165,8 +190,8 @@
     fbBtn.addEventListener('click', async function() {
       const provider = new FacebookAuthProvider();
       try {
-        await signInWithPopup(auth, provider);
-        window.location.href = 'index.html';
+        const result = await signInWithPopup(auth, provider);
+        await handlePostLogin(result.user);
       } catch (error) {
         alert('Facebook login failed: ' + (error.message || error.code));
       }

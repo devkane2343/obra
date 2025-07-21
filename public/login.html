@@ -142,15 +142,8 @@
     const userRef = doc(db, 'users', user.uid);
     const userSnap = await getDoc(userRef);
     if (!userSnap.exists()) {
-      // First time: create user doc
-      await setDoc(userRef, {
-        uid: user.uid,
-        email: user.email,
-        displayName: user.displayName || '',
-        provider: user.providerData[0]?.providerId || '',
-        createdAt: new Date()
-      });
-      window.location.href = 'signup2.html';
+      // User not registered: redirect to signup.html to complete registration
+      window.location.href = 'signup.html';
     } else {
       // Existing user
       window.location.href = 'client/client-dashboard.html';

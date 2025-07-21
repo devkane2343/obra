@@ -99,7 +99,7 @@
                         <img src="../client/icons/client.png" alt="Profile" class="w-8 h-8 rounded-full">
                         <span id="clientNavName" class="text-sm font-medium text-gray-700"></span>
                     </div>
-                    <a href="../login.html" class="text-gray-600 hover:text-gray-800 text-sm">Logout</a>
+                    <a href="../login.html" id="logoutBtn" class="text-gray-600 hover:text-gray-800 text-sm">Logout</a>
                 </div>
 
                 <!-- Mobile menu button -->
@@ -121,7 +121,7 @@
                         <img src="../client/icons/client.png" alt="Profile" class="w-8 h-8 rounded-full">
                         <span id="clientMobileNavName" class="text-sm font-medium text-gray-700"></span>
                     </div>
-                    <a href="/public/login.html" class="text-gray-600 hover:text-gray-800 text-sm">Logout</a>
+                    <a href="/public/login.html" id="mobileLogoutBtn" class="text-gray-600 hover:text-gray-800 text-sm">Logout</a>
                 </div>
                 <button class="w-full bg-primary text-white px-4 py-2 rounded-md hover:bg-primary-hover transition-colors text-sm font-medium">
                     Post New Job
@@ -395,6 +395,7 @@
         import { auth, db } from '/public/firebase-config.js';
         import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js';
         import { doc, getDoc } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js';
+        import { signOut } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js';
 
         onAuthStateChanged(auth, async (user) => {
             if (!user) {
@@ -416,6 +417,26 @@
                 }
             }
         });
+
+        // Logout for desktop
+        const logoutBtn = document.getElementById('logoutBtn');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', async (e) => {
+                e.preventDefault();
+                await signOut(auth);
+                window.location.href = '/public/login.html';
+            });
+        }
+
+        // Logout for mobile
+        const mobileLogoutBtn = document.getElementById('mobileLogoutBtn');
+        if (mobileLogoutBtn) {
+            mobileLogoutBtn.addEventListener('click', async (e) => {
+                e.preventDefault();
+                await signOut(auth);
+                window.location.href = '/public/login.html';
+            });
+        }
     </script>
     <script>
         // Mobile menu functionality

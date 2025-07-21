@@ -95,125 +95,85 @@
         </div>
     </div>
 
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+    <!-- Add Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     <script>
-        let currentUserType = 'client';
-        let oauthInProgress = false;
-        let oauthWelcomeTimeout;
+        // --- Firebase Config ---
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            appId: "YOUR_APP_ID",
+            // ...other config as needed
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
 
-        // --- Google OAuth ---
-        function handleGoogleCredentialResponse(response) {
-            // Decode JWT to get user info
+        // --- Google Sign-In ---
+        document.getElementById('googleSignInBtn').addEventListener('click', async function() {
+            const provider = new firebase.auth.GoogleAuthProvider();
             try {
-                const payload = JSON.parse(atob(response.credential.split('.')[1]));
-                // const name = payload.name;
-                // const email = payload.email;
-                // const picture = payload.picture;
-                // showWelcomeMessage({ name, email, picture, provider: 'Google' });
-                window.location.href = 'signup2.html';
-            } catch (e) {
-                showError('Google login failed. Please try again.');
+                const result = await auth.signInWithPopup(provider);
+                const user = result.user;
+                const session = {
+                    uid: user.uid,
+                    name: user.displayName,
+                    email: user.email,
+                    provider: result.providerId || (user.providerData[0]?.providerId) || 'google.com'
+                };
+                localStorage.setItem('obraUser', JSON.stringify(session));
+                window.location.href = 'choose-role.html';
+            } catch (error) {
+                showAuthError(error);
             }
-        }
+        });
 
-        function renderGoogleButton() {
-            const googleBtn = document.getElementById('googleSignInBtn');
-            googleBtn.addEventListener('click', function() {
-                if (oauthInProgress) return;
-                oauthInProgress = true;
-                google.accounts.id.prompt((notification) => {
-                    if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-                        oauthInProgress = false;
-                        showError('Google login was cancelled or could not be displayed.');
-                    }
-                });
-            });
-            // Initialize Google Identity Services
-            window.onload = function() {
-                google.accounts.id.initialize({
-                    client_id: '94071956664-fg7al838nsc8dn2ikf6krtrfb5jc1t94.apps.googleusercontent.com', // TODO: Replace with your Google client ID
-                    callback: handleGoogleCredentialResponse,
-                    ux_mode: 'popup',
-                });
-            };
-        }
+        // --- Facebook Sign-In ---
+        document.getElementById('facebookSignInBtn').addEventListener('click', async function() {
+            const provider = new firebase.auth.FacebookAuthProvider();
+            try {
+                const result = await auth.signInWithPopup(provider);
+                const user = result.user;
+                const session = {
+                    uid: user.uid,
+                    name: user.displayName,
+                    email: user.email,
+                    provider: result.providerId || (user.providerData[0]?.providerId) || 'facebook.com'
+                };
+                localStorage.setItem('obraUser', JSON.stringify(session));
+                window.location.href = 'choose-role.html';
+            } catch (error) {
+                showAuthError(error);
+            }
+        });
 
-        // --- Facebook OAuth ---
-        function initFacebookSDK() {
-            window.fbAsyncInit = function() {
-                FB.init({
-                    appId      : 'YOUR_FACEBOOK_APP_ID', // TODO: Replace with your Facebook App ID
-                    cookie     : true,
-                    xfbml      : false,
-                    version    : 'v19.0'
-                });
-            };
+        // --- Error Handling ---
+        function showAuthError(error) {
+            let message = error.message || 'Authentication failed. Please try again.';
+            if (error.code === 'auth/popup-blocked') {
+                message = 'Popup was blocked. Please allow popups and try again.';
+            } else if (error.code === 'auth/account-exists-with-different-credential') {
+                message = 'An account already exists with the same email but different sign-in method.';
+            }
+            showToast(message, true);
         }
-        function handleFacebookLogin() {
-            if (oauthInProgress) return;
-            oauthInProgress = true;
-            FB.login(function(response) {
-                if (response.authResponse) {
-                    FB.api('/me', {fields: 'name,email,picture'}, function(profile) {
-                        if (profile && profile.email) {
-                            showWelcomeMessage({
-                                name: profile.name,
-                                email: profile.email,
-                                picture: profile.picture?.data?.url,
-                                provider: 'Facebook'
-                            });
-                        } else {
-                            showError('Could not retrieve Facebook profile info.');
-                        }
-                    });
-                } else {
-                    showError('Facebook login was cancelled or failed.');
-                }
-            }, {scope: 'public_profile,email'});
+        // --- Toast UI ---
+        function showToast(msg, isError = false) {
+            let toast = document.getElementById('obra-toast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'obra-toast';
+                toast.className = 'fixed top-6 left-1/2 transform -translate-x-1/2 z-50 px-4 py-2 rounded shadow-lg text-white text-center fade-in';
+                document.body.appendChild(toast);
+            }
+            toast.textContent = msg;
+            toast.style.background = isError ? '#dc2626' : '#16a34a';
+            toast.style.opacity = '1';
+            setTimeout(() => {
+                toast.style.opacity = '0';
+            }, 3500);
         }
-        function renderFacebookButton() {
-            const fbBtn = document.getElementById('facebookSignInBtn');
-            fbBtn.addEventListener('click', handleFacebookLogin);
-        }
-
-        // --- Welcome Message & Error Handling ---
-        function showWelcomeMessage({ name, email, picture, provider }) {
-            oauthInProgress = false;
-            clearTimeout(oauthWelcomeTimeout);
-            const container = document.querySelector('.max-w-md');
-            container.innerHTML = `
-                <div class="glass-effect rounded-lg shadow-lg p-8 fade-in flex flex-col items-center text-center">
-                    <img src="${picture || ''}" alt="Profile Picture" class="w-20 h-20 rounded-full mb-4 border-4 border-primary shadow">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-2">Welcome, ${name}!</h2>
-                    <p class="text-gray-600 mb-2">Signed in with <span class="font-semibold">${provider}</span></p>
-                    <p class="text-gray-500 text-sm mb-4">${email}</p>
-                    <a href="index.html" class="mt-4 inline-block bg-primary text-white px-6 py-2 rounded-md hover:bg-primary-hover transition-colors font-medium">Go to Home</a>
-                </div>
-            `;
-            oauthWelcomeTimeout = setTimeout(() => {
-                window.location.href = 'index.html';
-            }, 5000);
-        }
-        function showError(message) {
-            oauthInProgress = false;
-            clearTimeout(oauthWelcomeTimeout);
-            const container = document.querySelector('.max-w-md');
-            const prev = container.innerHTML;
-            container.innerHTML = `
-                <div class="glass-effect rounded-lg shadow-lg p-8 fade-in flex flex-col items-center text-center">
-                    <h2 class="text-xl font-bold text-red-600 mb-2">Error</h2>
-                    <p class="text-gray-700 mb-4">${message}</p>
-                    <button class="bg-primary text-white px-6 py-2 rounded-md hover:bg-primary-hover transition-colors font-medium" id="retryBtn">Back to Signup</button>
-                </div>
-            `;
-            document.getElementById('retryBtn').onclick = () => {
-                container.innerHTML = prev;
-                renderGoogleButton();
-                renderFacebookButton();
-            };
-        }
-
         // --- Existing JS for form and UI ---
         function switchUserType(type) {
             currentUserType = type;
@@ -300,9 +260,9 @@
                     this.parentElement.classList.remove('transform', 'scale-[1.02]');
                 });
             });
-            renderGoogleButton();
-            renderFacebookButton();
-            initFacebookSDK();
+            // renderGoogleButton(); // Removed as per new_code
+            // renderFacebookButton(); // Removed as per new_code
+            // initFacebookSDK(); // Removed as per new_code
         });
     </script>
 </body>

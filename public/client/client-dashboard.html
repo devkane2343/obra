@@ -398,10 +398,8 @@
         // Check Firebase Auth state
         onAuthStateChanged(auth, (user) => {
             if (!user) {
-                // Not logged in, redirect to main page
                 window.location.href = '/public/index.html';
             } else {
-                // Insert user's name if available
                 const nameElem = document.getElementById('clientName');
                 const navNameElem = document.getElementById('clientNavName');
                 const mobileNavNameElem = document.getElementById('clientMobileNavName');

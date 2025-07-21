@@ -135,7 +135,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
         <!-- Welcome Section -->
         <div class="mb-6 sm:mb-8">
-            <h1 class="text-2xl sm:text-3xl font-bold text-dark">Welcome back, Rhenz!</h1>
+            <h1 class="text-2xl sm:text-3xl font-bold text-dark">Welcome, <span id="clientName"></span>!</h1>
             <p class="text-gray-600 mt-2 text-sm sm:text-base">Manage your projects and find the perfect talent for your business.</p>
         </div>
 
@@ -391,6 +391,32 @@
     </div>
 
     <script>
+        // Session check and dynamic name insertion
+        (function() {
+            const userStr = sessionStorage.getItem('user');
+            let user;
+            try {
+                user = JSON.parse(userStr);
+            } catch (e) {
+                user = null;
+            }
+            if (!user || !user.userType) {
+                // No valid session, redirect to login
+                window.location.href = '/public/login.html';
+                return;
+            }
+            if (user.userType !== 'client') {
+                // Not a client, redirect to error or login
+                window.location.href = '/public/login.html';
+                return;
+            }
+            // Insert user's name
+            const nameElem = document.getElementById('clientName');
+            if (nameElem && user.name) {
+                nameElem.textContent = user.name;
+            }
+        })();
+
         // Mobile menu functionality
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');

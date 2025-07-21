@@ -4,7 +4,7 @@ Hexacode
 #d7e3fc
 #d62222
 #2b283b
-#fffff
+#ffffff
 
 Primary Font - Lucida Sans
 Secondary Font - Georgia

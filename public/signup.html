@@ -254,10 +254,11 @@
             // Decode JWT to get user info
             try {
                 const payload = JSON.parse(atob(response.credential.split('.')[1]));
-                const name = payload.name;
-                const email = payload.email;
-                const picture = payload.picture;
-                showWelcomeMessage({ name, email, picture, provider: 'Google' });
+                // const name = payload.name;
+                // const email = payload.email;
+                // const picture = payload.picture;
+                // showWelcomeMessage({ name, email, picture, provider: 'Google' });
+                window.location.href = 'signup2.html';
             } catch (e) {
                 showError('Google login failed. Please try again.');
             }

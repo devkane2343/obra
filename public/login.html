@@ -81,7 +81,19 @@
                 <button type="submit" class="w-full bg-primary text-white py-2 px-4 rounded-md hover:bg-primary-hover transition-colors font-medium">
                     Sign In
                 </button>
-                
+
+                <!-- Social Sign In -->
+                <div class="mt-4 flex flex-col gap-2">
+                    <button id="facebookSignInBtn" type="button" class="flex items-center justify-center gap-2 w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors font-medium">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.675 0h-21.35C.595 0 0 .592 0 1.326v21.348C0 23.406.595 24 1.325 24h11.495v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.797.143v3.24l-1.918.001c-1.504 0-1.797.715-1.797 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116C23.406 24 24 23.406 24 22.674V1.326C24 .592 23.406 0 22.675 0"/></svg>
+                        Sign in with Facebook
+                    </button>
+                    <button id="googleSignInBtn" type="button" class="flex items-center justify-center gap-2 w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-100 transition-colors font-medium">
+                        <svg class="w-5 h-5" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_17_40)"><path d="M47.617 24.545c0-1.636-.147-3.2-.422-4.69H24.48v9.09h13.01c-.56 3.02-2.25 5.58-4.8 7.3v6.06h7.75c4.54-4.18 7.18-10.34 7.18-17.76z" fill="#4285F4"/><path d="M24.48 48c6.48 0 11.93-2.15 15.91-5.85l-7.75-6.06c-2.15 1.44-4.91 2.3-8.16 2.3-6.27 0-11.58-4.23-13.48-9.93H2.52v6.23C6.48 43.98 14.7 48 24.48 48z" fill="#34A853"/><path d="M11 28.46c-.5-1.44-.78-2.98-.78-4.46s.28-3.02.78-4.46v-6.23H2.52A23.97 23.97 0 000 24c0 3.98.97 7.75 2.52 11.23L11 28.46z" fill="#FBBC05"/><path d="M24.48 9.54c3.53 0 6.66 1.22 9.14 3.62l6.84-6.84C36.41 2.15 30.96 0 24.48 0 14.7 0 6.48 4.02 2.52 10.77l8.48 6.23c1.9-5.7 7.21-9.93 13.48-9.93z" fill="#EA4335"/></g><defs><clipPath id="clip0_17_40"><rect width="48" height="48" fill="white"/></clipPath></defs></svg>
+                        Sign in with Google
+                    </button>
+                </div>
+
                 <div class="text-center mt-4">
                     <p class="text-sm text-gray-600">Continue as:</p>
                     <div class="flex gap-2 mt-2">
@@ -111,5 +123,113 @@
             <a href="index.html" class="text-gray-600 hover:text-gray-800 text-sm">← Back to Home</a>
         </div>
     </div>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+    <script>
+        let oauthInProgress = false;
+
+        // --- Google OAuth ---
+        function handleGoogleCredentialResponse(response) {
+            try {
+                const payload = JSON.parse(atob(response.credential.split('.')[1]));
+                const email = payload.email;
+                // Check with backend if user exists
+                fetch('YOUR_BACKEND_URL/check-user', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.exists) {
+                        // Redirect to dashboard (choose based on user type if needed)
+                        window.location.href = 'index.html';
+                    } else {
+                        // Redirect to signup
+                        window.location.href = 'signup.html';
+                    }
+                })
+                .catch(() => {
+                    alert('Error checking user.');
+                });
+            } catch (e) {
+                alert('Google login failed. Please try again.');
+            }
+        }
+        function renderGoogleButton() {
+            const googleBtn = document.getElementById('googleSignInBtn');
+            if (!googleBtn) return;
+            googleBtn.addEventListener('click', function() {
+                if (oauthInProgress) return;
+                oauthInProgress = true;
+                google.accounts.id.prompt((notification) => {
+                    oauthInProgress = false;
+                });
+            });
+            window.onload = function() {
+                google.accounts.id.initialize({
+                    client_id: '94071956664-fg7al838nsc8dn2ikf6krtrfb5jc1t94.apps.googleusercontent.com', // Replace with your Google client ID
+                    callback: handleGoogleCredentialResponse,
+                    ux_mode: 'popup',
+                });
+            };
+        }
+
+        // --- Facebook OAuth ---
+        function initFacebookSDK() {
+            window.fbAsyncInit = function() {
+                FB.init({
+                    appId      : 'YOUR_FACEBOOK_APP_ID', // Replace with your Facebook App ID
+                    cookie     : true,
+                    xfbml      : false,
+                    version    : 'v19.0'
+                });
+            };
+        }
+        function handleFacebookLogin() {
+            if (oauthInProgress) return;
+            oauthInProgress = true;
+            FB.login(function(response) {
+                if (response.authResponse) {
+                    FB.api('/me', {fields: 'name,email,picture'}, function(profile) {
+                        if (profile && profile.email) {
+                            // Check with backend if user exists
+                            fetch('YOUR_BACKEND_URL/check-user', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ email: profile.email })
+                            })
+                            .then(res => res.json())
+                            .then(data => {
+                                if (data.exists) {
+                                    window.location.href = 'index.html';
+                                } else {
+                                    window.location.href = 'signup.html';
+                                }
+                            })
+                            .catch(() => {
+                                alert('Error checking user.');
+                            });
+                        } else {
+                            alert('Could not retrieve Facebook profile info.');
+                        }
+                    });
+                } else {
+                    alert('Facebook login was cancelled or failed.');
+                }
+            }, {scope: 'public_profile,email'});
+        }
+        function renderFacebookButton() {
+            const fbBtn = document.getElementById('facebookSignInBtn');
+            if (!fbBtn) return;
+            fbBtn.addEventListener('click', handleFacebookLogin);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            renderGoogleButton();
+            renderFacebookButton();
+            initFacebookSDK();
+        });
+    </script>
 </body>
 </html>

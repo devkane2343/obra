@@ -105,19 +105,47 @@
             border-radius: 6px;
             padding: 1rem;
         }
+        .neon-border {
+            border: 2px solid #00e6ff;
+            box-shadow: 0 0 8px #00e6ff, 0 0 16px #00e6ff, 0 0 32px #00e6ff;
+            transition: box-shadow 0.3s, border-color 0.3s;
+        }
+        .neon-border:hover {
+            box-shadow: 0 0 16px #00e6ff, 0 0 32px #00e6ff, 0 0 64px #00e6ff;
+            border-color: #00fff7;
+        }
+        .neon-animated-border {
+            position: relative;
+            z-index: 1;
+        }
+        .neon-animated-border::before {
+            content: '';
+            position: absolute;
+            top: -4px; left: -4px; right: -4px; bottom: -4px;
+            border-radius: 12px;
+            z-index: -1;
+            background: linear-gradient(270deg, #00e6ff, #00fff7, #00e6ff, #021534, #00e6ff);
+            background-size: 400% 400%;
+            filter: blur(2px);
+            animation: neon-run 2s linear infinite;
+        }
+        @keyframes neon-run {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
     </style>
 </head>
 <body class="bg-gradient-to-br from-gray-50 via-blue-50 to-white text-gray-800 min-h-screen">
     <!-- Navigation -->
-    <nav class="bg-gradient-to-r from-white/90 via-blue-50/90 to-gray-100/90 backdrop-blur-md shadow-sm border-b border-gray-100/50 sticky top-0 z-50">
+    <nav class="bg-gradient-to-r from-white/50 via-blue-400/50 to-blue-600/50 backdrop-blur-md shadow-md border-b border-blue-200/30 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center">
                     <img src="icons/obratext.png" alt="Obra" class="h-8 object-contain" />
                 </div>
                 <div class="flex items-center space-x-4">
-                    <a href="login.html" class="text-gray-600 hover:text-primary transition-colors duration-300">Login</a>
-                    <a href="signup.html" class="glass-button text-primary px-4 py-2 rounded-lg smooth-transition">Sign Up</a>
+                    <a href="login.html" class="text-white hover:text-accent transition-colors duration-300 font-medium">Login</a>
+                    <a href="signup.html" class="glass-button bg-accent text-white px-4 py-2 rounded-lg smooth-transition font-semibold shadow-md hover:bg-primary-hover">Sign Up</a>
                 </div>
             </div>
         </div>
@@ -200,46 +228,46 @@
             <p class="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
                 Join thousands of professionals who are already building their careers on Obra
             </p>
-            <a href="login.html" class="glass-button text-primary bg-white/90 px-8 py-4 rounded-lg text-lg font-semibold smooth-transition shadow-lg">
+            <a href="login.html" class="glass-button neon-border neon-animated-border text-primary bg-white/90 px-8 py-4 rounded-lg text-lg font-semibold smooth-transition shadow-lg">
                 Join Obra Today
             </a>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gradient-to-br from-gray-900/90 via-dark/90 to-gray-900/90 backdrop-blur-md text-white py-12">
+    <footer class="bg-gradient-to-br from-blue-400/50 via-blue-200/50 to-white/50 backdrop-blur-md text-dark py-12 border-t-2 border-blue-200/60 shadow-inner">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid md:grid-cols-4 gap-8">
                 <div>
                     <h3 class="text-xl font-bold mb-4 gradient-text">Obra</h3>
-                    <p class="text-gray-400">Connecting talent with opportunity worldwide.</p>
+                    <p class="text-gray-600">Connecting talent with opportunity worldwide.</p>
                 </div>
                 <div>
-                    <h4 class="font-semibold mb-4">For Freelancers</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#" class="hover:text-white transition-colors duration-300">Find Work</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors duration-300">Build Profile</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors duration-300">Success Stories</a></li>
+                    <h4 class="font-semibold mb-4 text-primary">For Freelancers</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-blue-700 hover:text-accent transition-colors duration-300">Find Work</a></li>
+                        <li><a href="#" class="text-blue-700 hover:text-accent transition-colors duration-300">Build Profile</a></li>
+                        <li><a href="#" class="text-blue-700 hover:text-accent transition-colors duration-300">Success Stories</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-semibold mb-4">For Clients</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#" class="hover:text-white transition-colors duration-300">Post Jobs</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors duration-300">Find Talent</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors duration-300">Enterprise</a></li>
+                    <h4 class="font-semibold mb-4 text-primary">For Clients</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-blue-700 hover:text-accent transition-colors duration-300">Post Jobs</a></li>
+                        <li><a href="#" class="text-blue-700 hover:text-accent transition-colors duration-300">Find Talent</a></li>
+                        <li><a href="#" class="text-blue-700 hover:text-accent transition-colors duration-300">Enterprise</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-semibold mb-4">Support</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#" class="hover:text-white transition-colors duration-300">Help Center</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors duration-300">Contact Us</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors duration-300">Terms of Service</a></li>
+                    <h4 class="font-semibold mb-4 text-primary">Support</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-blue-700 hover:text-accent transition-colors duration-300">Help Center</a></li>
+                        <li><a href="#" class="text-blue-700 hover:text-accent transition-colors duration-300">Contact Us</a></li>
+                        <li><a href="#" class="text-blue-700 hover:text-accent transition-colors duration-300">Terms of Service</a></li>
                     </ul>
                 </div>
             </div>
-            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+            <div class="border-t border-blue-100 mt-8 pt-8 text-center text-gray-500">
                 <p>&copy; 2025 Obra. All rights reserved.</p>
             </div>
         </div>

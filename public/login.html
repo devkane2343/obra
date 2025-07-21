@@ -10,9 +10,9 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#007BFF',
+                        primary: '#7c3aed',
                         dark: '#0D1B2A',
-                        'primary-hover': '#0056b3'
+                        'primary-hover': '#6d28d9'
                     }
                 }
             }
@@ -23,9 +23,6 @@
         body, html {
             font-family: 'Lucida Sans', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans Regular', Geneva, Verdana, sans-serif;
         }
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Lucida Sans', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans Regular', Geneva, Verdana, 'Georgia', serif;
-        }
         .glass-effect {
             background: rgba(255, 255, 255, 0.25);
             backdrop-filter: blur(10px);
@@ -33,133 +30,108 @@
             border: 1px solid rgba(255, 255, 255, 0.18);
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
         }
-        
         .fade-in {
             animation: fadeIn 0.5s ease-in-out;
         }
-        
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body class="bg-gradient-to-br from-blue-100 via-blue-200 to-blue-300 min-h-screen flex items-center justify-center">
-    <div class="max-w-md w-full mx-4">
-        <!-- Logo -->
-        <div class="text-center mb-8">
-            <h1 class="text-3xl font-bold text-primary">Obra</h1>
-            <p class="text-gray-600 mt-2">Welcome back to your workspace</p>
-        </div>
-
-        <!-- Login Form -->
-        <div class="glass-effect rounded-lg shadow-lg p-8 fade-in">
-            <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Sign In</h2>
-            
-            <form class="space-y-4">
-                <div>
-                    <label for="loginEmail" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                    <input type="email" id="loginEmail" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-white/70 backdrop-blur-sm" placeholder="Enter your email">
+    <div class="w-full min-h-screen flex items-center justify-center">
+        <div class="glass-effect fade-in max-w-sm w-full p-8 rounded-2xl shadow-lg flex flex-col items-center relative">
+            <!-- Jump back in Modal (hidden by default) -->
+            <div id="jumpBackInModal" class="w-full flex flex-col items-center" style="display:none;">
+                <h2 class="text-2xl font-bold mb-4 text-gray-900">Jump back in!</h2>
+                <img id="userPhoto" src="" alt="Profile" class="w-16 h-16 rounded-full border-2 border-primary mb-2">
+                <div class="text-center mb-4">
+                    <p id="userName" class="font-semibold text-lg text-gray-800"></p>
+                    <p id="userEmail" class="text-gray-500 text-sm"></p>
                 </div>
-                <div>
-                    <label for="loginPassword" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                    <input type="password" id="loginPassword" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-white/70 backdrop-blur-sm" placeholder="Enter your password">
+                <button id="continueBtn" class="w-full bg-primary text-white py-2 rounded-md font-semibold text-lg mb-2 hover:bg-primary-hover transition-colors">Continue</button>
+                <div class="flex items-center w-full my-2">
+                    <div class="flex-1 h-px bg-gray-300"></div>
+                    <span class="mx-2 text-xs text-gray-400">OR</span>
+                    <div class="flex-1 h-px bg-gray-300"></div>
                 </div>
-                <div class="flex items-center justify-between">
-                    <label class="flex items-center">
-                        <input type="checkbox" class="rounded border-gray-300 text-primary focus:ring-primary">
-                        <span class="ml-2 text-sm text-gray-600">Remember me</span>
-                    </label>
-                    <a href="#" class="text-sm text-primary hover:text-primary-hover">Forgot password?</a>
-                </div>
-                <button type="submit" class="w-full bg-primary text-white py-2 px-4 rounded-md hover:bg-primary-hover transition-colors font-medium">
-                    Sign In
-                </button>
-
-                <!-- Social Sign In -->
-                <div class="mt-4 flex flex-col gap-2">
-                    <button id="facebookSignInBtn" type="button" class="flex items-center justify-center gap-2 w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors font-medium">
-                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.675 0h-21.35C.595 0 0 .592 0 1.326v21.348C0 23.406.595 24 1.325 24h11.495v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.797.143v3.24l-1.918.001c-1.504 0-1.797.715-1.797 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116C23.406 24 24 23.406 24 22.674V1.326C24 .592 23.406 0 22.675 0"/></svg>
-                        Sign in with Facebook
-                    </button>
-                    <button id="googleSignInBtn" type="button" class="flex items-center justify-center gap-2 w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-100 transition-colors font-medium">
-                        <svg class="w-5 h-5" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_17_40)"><path d="M47.617 24.545c0-1.636-.147-3.2-.422-4.69H24.48v9.09h13.01c-.56 3.02-2.25 5.58-4.8 7.3v6.06h7.75c4.54-4.18 7.18-10.34 7.18-17.76z" fill="#4285F4"/><path d="M24.48 48c6.48 0 11.93-2.15 15.91-5.85l-7.75-6.06c-2.15 1.44-4.91 2.3-8.16 2.3-6.27 0-11.58-4.23-13.48-9.93H2.52v6.23C6.48 43.98 14.7 48 24.48 48z" fill="#34A853"/><path d="M11 28.46c-.5-1.44-.78-2.98-.78-4.46s.28-3.02.78-4.46v-6.23H2.52A23.97 23.97 0 000 24c0 3.98.97 7.75 2.52 11.23L11 28.46z" fill="#FBBC05"/><path d="M24.48 9.54c3.53 0 6.66 1.22 9.14 3.62l6.84-6.84C36.41 2.15 30.96 0 24.48 0 14.7 0 6.48 4.02 2.52 10.77l8.48 6.23c1.9-5.7 7.21-9.93 13.48-9.93z" fill="#EA4335"/></g><defs><clipPath id="clip0_17_40"><rect width="48" height="48" fill="white"/></clipPath></defs></svg>
-                        Sign in with Google
-                    </button>
-                </div>
-
-                <div class="text-center mt-4">
-                    <p class="text-sm text-gray-600">Continue as:</p>
-                    <div class="flex gap-2 mt-2">
-                        <a href="../public/worker/worker-dashboard.html" class="flex-1 bg-blue-50/70 text-primary py-2 px-4 rounded-md hover:bg-blue-100/70 transition-colors text-sm font-medium backdrop-blur-sm">
-                            Freelancer
-                        </a>
-                        <a href="../public/client/client-dashboard.html" class="flex-1 bg-green-50/70 text-green-600 py-2 px-4 rounded-md hover:bg-green-100/70 transition-colors text-sm font-medium backdrop-blur-sm">
-                            Client
-                        </a>
-                    </div>
-                </div>
-            </form>
-
-            <!-- Sign Up Link -->
-            <div class="text-center mt-6 pt-6 border-t border-gray-200">
-                <p class="text-sm text-gray-600">
-                    Don't have an account? 
-                    <a href="signup.html" class="text-primary hover:text-primary-hover font-medium transition-colors">
-                        Sign up here
-                    </a>
-                </p>
+                <button id="switchAccountBtn" class="w-full bg-white border border-gray-300 text-gray-700 py-2 rounded-md font-medium hover:bg-gray-100 transition-colors mb-2">Continue with another account</button>
+                <p class="text-xs text-gray-500 mt-2">By continuing, you agree to Obra's <a href="policy.html" class="underline">Terms of Use</a> and <a href="policy.html" class="underline">Privacy Policy</a>.</p>
+                <a href="#" class="text-xs text-blue-500 underline mt-2">Do you need to remove an account?</a>
             </div>
-        </div>
-
-        <!-- Back to Home -->
-        <div class="text-center mt-6">
-            <a href="index.html" class="text-gray-600 hover:text-gray-800 text-sm">← Back to Home</a>
+            <!-- Default Login Options -->
+            <div id="defaultLogin" class="w-full flex flex-col items-center">
+                <h1 class="text-3xl font-bold text-primary mb-2">Obra</h1>
+                <p class="text-gray-600 mb-6">Welcome back to your workspace</p>
+                <button id="googleSignInBtn" type="button" class="flex items-center justify-center gap-2 w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-100 transition-colors font-medium mb-2">
+                    <svg class="w-5 h-5" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_17_40)"><path d="M47.617 24.545c0-1.636-.147-3.2-.422-4.69H24.48v9.09h13.01c-.56 3.02-2.25 5.58-4.8 7.3v6.06h7.75c4.54-4.18 7.18-10.34 7.18-17.76z" fill="#4285F4"/><path d="M24.48 48c6.48 0 11.93-2.15 15.91-5.85l-7.75-6.06c-2.15 1.44-4.91 2.3-8.16 2.3-6.27 0-11.58-4.23-13.48-9.93H2.52v6.23C6.48 43.98 14.7 48 24.48 48z" fill="#34A853"/><path d="M11 28.46c-.5-1.44-.78-2.98-.78-4.46s.28-3.02.78-4.46v-6.23H2.52A23.97 23.97 0 000 24c0 3.98.97 7.75 2.52 11.23L11 28.46z" fill="#FBBC05"/><path d="M24.48 9.54c3.53 0 6.66 1.22 9.14 3.62l6.84-6.84C36.41 2.15 30.96 0 24.48 0 14.7 0 6.48 4.02 2.52 10.77l8.48 6.23c1.9-5.7 7.21-9.93 13.48-9.93z" fill="#EA4335"/></g><defs><clipPath id="clip0_17_40"><rect width="48" height="48" fill="white"/></clipPath></defs></svg>
+                    Sign in with Google
+                </button>
+                <button id="facebookSignInBtn" type="button" class="flex items-center justify-center gap-2 w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors font-medium mb-2">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.675 0h-21.35C.595 0 0 .592 0 1.326v21.348C0 23.406.595 24 1.325 24h11.495v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.797.143v3.24l-1.918.001c-1.504 0-1.797.715-1.797 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116C23.406 24 24 23.406 24 22.674V1.326C24 .592 23.406 0 22.675 0"/></svg>
+                    Sign in with Facebook
+                </button>
+                <div class="flex items-center w-full my-4">
+                    <div class="flex-1 h-px bg-gray-300"></div>
+                    <span class="mx-2 text-xs text-gray-400">OR</span>
+                    <div class="flex-1 h-px bg-gray-300"></div>
+                </div>
+                <div class="flex gap-2 w-full mb-2">
+                    <a href="worker/worker-dashboard.html" class="flex-1 bg-blue-50/70 text-primary py-2 px-4 rounded-md hover:bg-blue-100/70 transition-colors text-sm font-medium backdrop-blur-sm text-center">Freelancer</a>
+                    <a href="client/client-dashboard.html" class="flex-1 bg-green-50/70 text-green-600 py-2 px-4 rounded-md hover:bg-green-100/70 transition-colors text-sm font-medium backdrop-blur-sm text-center">Client</a>
+                </div>
+                <a href="index.html" class="text-gray-600 hover:text-gray-800 text-sm mt-2">← Back to Home</a>
+                <div class="text-center mt-6 pt-6 border-t border-gray-200 w-full">
+                    <p class="text-sm text-gray-600">
+                        Don't have an account? 
+                        <a href="signup.html" class="text-primary hover:text-primary-hover font-medium transition-colors">
+                            Sign up here
+                        </a>
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
     <script type="module">
-  import { auth, db } from './firebase-config.js';
+  import { auth } from './firebase-config.js';
   import {
-    signInWithEmailAndPassword,
     GoogleAuthProvider,
     signInWithPopup,
-    FacebookAuthProvider
+    FacebookAuthProvider,
+    onAuthStateChanged,
+    signOut
   } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js';
-  import {
-    doc,
-    getDoc,
-    setDoc
-  } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js';
 
-  // Helper: Check if user doc exists, create if not, and redirect
-  async function handlePostLogin(user) {
-    const userRef = doc(db, 'users', user.uid);
-    const userSnap = await getDoc(userRef);
-    if (!userSnap.exists()) {
-      // User not registered: redirect to signup.html to complete registration
-      window.location.href = 'signup.html';
+  // Show modal if user is already logged in with Google
+  const jumpBackInModal = document.getElementById('jumpBackInModal');
+  const defaultLogin = document.getElementById('defaultLogin');
+  const userPhoto = document.getElementById('userPhoto');
+  const userName = document.getElementById('userName');
+  const userEmail = document.getElementById('userEmail');
+  const continueBtn = document.getElementById('continueBtn');
+  const switchAccountBtn = document.getElementById('switchAccountBtn');
+
+  onAuthStateChanged(auth, (user) => {
+    if (user && user.providerData.some(p => p.providerId === 'google.com')) {
+      // Show Jump Back In modal
+      userPhoto.src = user.photoURL;
+      userName.textContent = user.displayName;
+      userEmail.textContent = user.email;
+      jumpBackInModal.style.display = 'flex';
+      defaultLogin.style.display = 'none';
+      continueBtn.onclick = () => {
+        window.location.href = 'client/client-dashboard.html';
+      };
+      switchAccountBtn.onclick = async () => {
+        await signOut(auth);
+        jumpBackInModal.style.display = 'none';
+        defaultLogin.style.display = 'flex';
+      };
     } else {
-      // Existing user
-      window.location.href = 'client/client-dashboard.html';
-    }
-  }
-
-  // Email/Password Login
-  document.querySelector('form').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    const email = document.getElementById('loginEmail').value;
-    const password = document.getElementById('loginPassword').value;
-    try {
-      const result = await signInWithEmailAndPassword(auth, email, password);
-      await handlePostLogin(result.user);
-    } catch (error) {
-      alert('Login failed: ' + (error.message || error.code));
+      // Show default login
+      jumpBackInModal.style.display = 'none';
+      defaultLogin.style.display = 'flex';
     }
   });
 
@@ -170,7 +142,7 @@
       const provider = new GoogleAuthProvider();
       try {
         const result = await signInWithPopup(auth, provider);
-        await handlePostLogin(result.user);
+        // After login, modal will show via onAuthStateChanged
       } catch (error) {
         alert('Google login failed: ' + (error.message || error.code));
       }
@@ -183,8 +155,7 @@
     fbBtn.addEventListener('click', async function() {
       const provider = new FacebookAuthProvider();
       try {
-        const result = await signInWithPopup(auth, provider);
-        await handlePostLogin(result.user);
+        await signInWithPopup(auth, provider);
       } catch (error) {
         alert('Facebook login failed: ' + (error.message || error.code));
       }

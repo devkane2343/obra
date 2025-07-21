@@ -95,8 +95,8 @@
                         <div class="w-8 h-8 gradient-bg rounded-lg flex items-center justify-center">
                             <span class="text-white font-bold text-sm">O</span>
                         </div>
-                        <img src="../icons/obratext.png" height="50" width="100">
-                        <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs font-medium">Client Dashboard</span>
+                        <span class="text-xl font-bold text-gray-900">Obra</span>
+                        <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs font-medium">Client</span>
                     </div>
                 </div>
 
@@ -185,12 +185,11 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm font-medium text-gray-600 mb-1">Total Spent</p>
-                        <p class="text-3xl font-bold text-gray-900">₱24,500</p>
+                        <p class="text-3xl font-bold text-gray-900">$24,500</p>
                         <p class="text-sm text-green-600 mt-1">+12% from last month</p>
                     </div>
                     <div class="p-3 rounded-full bg-purple-50">
-                        <i data-lucide="dollar-sign" class="w-6 h-6 text-purple-600 hidden"></i>
-                        <span class="text-purple-600 text-2xl font-bold">₱</span>
+                        <i data-lucide="dollar-sign" class="w-6 h-6 text-purple-600"></i>
                     </div>
                 </div>
             </div>
@@ -294,7 +293,7 @@
                             <div>
                                 <label class="text-sm font-medium text-gray-700 mb-2 block">Budget</label>
                                 <div class="relative">
-                                    <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 text-lg font-bold">₱</span>
+                                    <i data-lucide="dollar-sign" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4"></i>
                                     <input
                                         type="text"
                                         placeholder="5,000"
@@ -490,7 +489,7 @@
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Budget *</label>
                             <div class="relative">
-                                <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 text-lg font-bold">₱</span>
+                                <i data-lucide="dollar-sign" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4"></i>
                                 <input
                                     type="text"
                                     placeholder="5,000"
@@ -524,77 +523,6 @@
         </div>
     </div>
 
-    <!-- Hire Now Modal -->
-    <div id="hireNowModal" class="modal fixed inset-0 z-[1100] hidden items-center justify-center bg-black/50 backdrop-blur-sm">
-        <div role="dialog" aria-modal="true"
-             class="relative bg-gradient-to-br from-white via-blue-200 to-blue-500 rounded-2xl shadow-2xl w-full max-w-md mx-4 animate-pop-out overflow-hidden">
-      
-          <!-- Close Button -->
-          <button id="closeHireNowModal"
-                  class="absolute top-4 right-4 text-white text-2xl font-bold hover:text-blue-300 transition-colors z-10"
-                  aria-label="Close Hire Modal">&times;</button>
-      
-          <!-- Profile Section -->
-          <div class="flex justify-center mt-8 mb-4">
-            <div id="hireNowProfilePic"
-                 class="w-20 h-20 rounded-full bg-gradient-to-br from-white to-blue-500 flex items-center justify-center text-blue-900 text-3xl font-bold border-4 border-white shadow-lg">
-              <span id="hireNowProfileInitials">??</span>
-            </div>
-          </div>
-      
-          <!-- Content -->
-          <div class="px-8 pb-8">
-            <h2 class="text-2xl font-bold text-blue-900 mb-6 text-center">Hire This Talent</h2>
-      
-            <!-- Instant Booking -->
-            <div id="hireNowServicesSection" class="mb-8">
-              <h3 class="text-lg font-semibold text-blue-900 mb-4">Instant Service Booking</h3>
-              <ul id="hireNowServicesList" class="space-y-3">
-                <!-- Service buttons are injected here dynamically -->
-              </ul>
-            </div>
-      
-            <!-- Divider -->
-            <div class="flex flex-col items-center">
-              <span class="text-blue-900 mb-2">or</span>
-      
-              <!-- Chat CTA -->
-              <button id="hireNowChatBtn"
-                      class="w-full bg-gradient-to-r from-blue-600 to-blue-800 hover:opacity-90 text-white py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 font-medium">
-                Start Chat for Custom Quote
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Styles (you can move this to your CSS file) -->
-      <style>
-        .modal.active {
-          display: flex !important;
-        }
-      
-        @keyframes popOut {
-          0% {
-            opacity: 0;
-            transform: scale(0.95) translateY(40px);
-          }
-          100% {
-            opacity: 1;
-            transform: scale(1) translateY(0);
-          }
-        }
-      
-        .animate-pop-out {
-          animation: popOut 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-      
-        /* Optional custom background class if not using Tailwind's gradient utilities */
-        .gradient-bg {
-          background-image: linear-gradient(to right, #2563eb, #1e40af);
-        }
-      </style>
-      
     <script>
         // Talent data
 const talents = [
@@ -935,13 +863,13 @@ function createTalentCard(talent, index) {
                 <span>Responds in ${talent.responseTime}</span>
             </div>
             <div class="text-right">
-                <div class="font-bold text-lg text-gray-900">₱${talent.hourlyRate}/hr</div>
+                <div class="font-bold text-lg text-gray-900">$${talent.hourlyRate}/hr</div>
                 <div class="text-xs text-gray-500">${talent.completedJobs} jobs completed</div>
             </div>
         </div>
 
         <div class="flex space-x-2">
-            <button class="flex-1 gradient-bg hover:opacity-90 text-white py-2 px-4 rounded-lg transition-all font-medium hire-now-btn" data-talent-id="${talent.id}">
+            <button class="flex-1 gradient-bg hover:opacity-90 text-white py-2 px-4 rounded-lg transition-all font-medium">
                 Hire Now
             </button>
             <button class="border border-gray-300 text-gray-700 hover:bg-gray-50 p-2 rounded-lg transition-colors">
@@ -989,106 +917,6 @@ document.addEventListener('keydown', function(e) {
         userDropdown.classList.remove('active');
     }
 });
-
-// --- Hire Now Modal Logic ---
-const hireNowModal = document.getElementById('hireNowModal');
-const closeHireNowModalBtn = document.getElementById('closeHireNowModal');
-const hireNowServicesList = document.getElementById('hireNowServicesList');
-const hireNowChatBtn = document.getElementById('hireNowChatBtn');
-let currentHireNowWorkerId = null;
-let currentHireNowWorkerName = '';
-
-function showHireNowModal(workerId, servicesArray, workerName = '') {
-    currentHireNowWorkerId = workerId;
-    currentHireNowWorkerName = workerName;
-    // Set profile initials
-    const initials = workerName
-        ? workerName.split(' ').map(n => n[0]).join('').slice(0,2).toUpperCase()
-        : '??';
-    document.getElementById('hireNowProfileInitials').textContent = initials;
-    // Populate services
-    hireNowServicesList.innerHTML = '';
-    if (Array.isArray(servicesArray) && servicesArray.length > 0) {
-        servicesArray.forEach(service => {
-            const li = document.createElement('li');
-            li.className = 'flex items-center justify-between bg-white/10 rounded-lg px-4 py-3';
-            li.innerHTML = `
-                <span class="text-blue-900 font-bold">${service.title}</span>
-                <span class="text-blue-900 font-bold mr-4">${service.price}</span>
-                <button class="book-now-btn gradient-bg hover:opacity-90 text-white font-bold px-3 py-1 rounded-lg transition-all border border-blue-900" data-title="${encodeURIComponent(service.title)}" data-price="${encodeURIComponent(service.price)}">Book Now</button>
-            `;
-            hireNowServicesList.appendChild(li);
-        });
-    } else {
-        hireNowServicesList.innerHTML = '<li class="text-blue-900 font-bold">No instant services available.</li>';
-    }
-    // Show modal
-    hireNowModal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
-
-function closeHireNowModal() {
-    hireNowModal.classList.remove('active');
-    document.body.style.overflow = 'auto';
-}
-
-closeHireNowModalBtn.addEventListener('click', closeHireNowModal);
-hireNowModal.addEventListener('click', function(e) {
-    if (e.target === hireNowModal) closeHireNowModal();
-});
-
-document.addEventListener('keydown', function(e) {
-    if (hireNowModal.classList.contains('active') && e.key === 'Escape') closeHireNowModal();
-});
-
-// Delegate Book Now button clicks
-hireNowServicesList.addEventListener('click', function(e) {
-    if (e.target.classList.contains('book-now-btn')) {
-        const serviceTitle = e.target.getAttribute('data-title');
-        const price = e.target.getAttribute('data-price');
-        window.location.href = `/checkout?service=${serviceTitle}&price=${price}`;
-    }
-});
-
-// Chat for custom quote
-hireNowChatBtn.addEventListener('click', function() {
-    if (currentHireNowWorkerId) {
-        window.location.href = `/chat?workerId=${currentHireNowWorkerId}`;
-    }
-});
-
-// Attach to Hire Now buttons in talent cards
-function attachHireNowButtons() {
-    document.querySelectorAll('.hire-now-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const talentId = parseInt(btn.getAttribute('data-talent-id'));
-            // Example: You would fetch or define services per worker here
-            // For demo, use a static array or map by talentId
-            const demoServices = {
-                1: [ { title: 'Full Stack Web App', price: '₱10,000' }, { title: 'API Integration', price: '₱3,000' } ],
-                2: [ { title: 'UI/UX Audit', price: '₱2,000' }, { title: 'Mobile App Design', price: '₱5,000' } ],
-                3: [ { title: 'iOS App', price: '₱8,000' }, { title: 'Android App', price: '₱7,500' } ],
-                4: [ { title: 'Data Analysis', price: '₱4,000' }, { title: 'ML Model', price: '₱12,000' } ],
-                5: [ { title: 'SEO Boost', price: '₱1,500' }, { title: 'Ad Campaign', price: '₱3,500' } ],
-                6: [ { title: 'Backend API', price: '₱6,000' }, { title: 'Database Design', price: '₱4,500' } ],
-                7: [ { title: 'Product Design Sprint', price: '₱9,000' } ],
-                8: [ { title: 'DevOps Setup', price: '₱7,000' }, { title: 'CI/CD Pipeline', price: '₱5,000' } ],
-            };
-            // Get the worker name from the talents array
-            const talent = talents.find(t => t.id === talentId);
-            const workerName = talent ? talent.name : '';
-            const services = demoServices[talentId] || [];
-            showHireNowModal(talentId, services, workerName);
-        });
-    });
-}
-// Call after rendering talent grid
-renderTalentGrid = (function(orig) {
-    return function() {
-        orig();
-        attachHireNowButtons();
-    };
-})(renderTalentGrid);
     </script>
 </body>
 </html>

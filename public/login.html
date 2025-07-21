@@ -126,6 +126,12 @@
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
     <script>
+        function getBackendUrl(path) {
+            if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+                return `http://localhost:3000${path}`; // Change 3000 to your backend port if different
+            }
+            return `https://your-vercel-backend.vercel.app${path}`; // Replace with your actual Vercel backend URL
+        }
         let oauthInProgress = false;
 
         // --- Google OAuth ---
@@ -134,7 +140,7 @@
                 const payload = JSON.parse(atob(response.credential.split('.')[1]));
                 const email = payload.email;
                 // Check with backend if user exists
-                fetch('YOUR_BACKEND_URL/check-user', {
+                fetch(getBackendUrl('/check-user'), {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email })
@@ -142,10 +148,8 @@
                 .then(res => res.json())
                 .then(data => {
                     if (data.exists) {
-                        // Redirect to dashboard (choose based on user type if needed)
                         window.location.href = 'index.html';
                     } else {
-                        // Redirect to signup
                         window.location.href = 'signup.html';
                     }
                 })
@@ -168,7 +172,7 @@
             });
             window.onload = function() {
                 google.accounts.id.initialize({
-                    client_id: '94071956664-fg7al838nsc8dn2ikf6krtrfb5jc1t94.apps.googleusercontent.com', // Replace with your Google client ID
+                    client_id: '94071956664-fg7al838nsc8dn2ikf6krtrfb5jc1t94.apps.googleusercontent.com',
                     callback: handleGoogleCredentialResponse,
                     ux_mode: 'popup',
                 });
@@ -179,7 +183,7 @@
         function initFacebookSDK() {
             window.fbAsyncInit = function() {
                 FB.init({
-                    appId      : 'YOUR_FACEBOOK_APP_ID', // Replace with your Facebook App ID
+                    appId      : 'YOUR_FACEBOOK_APP_ID',
                     cookie     : true,
                     xfbml      : false,
                     version    : 'v19.0'
@@ -194,7 +198,7 @@
                     FB.api('/me', {fields: 'name,email,picture'}, function(profile) {
                         if (profile && profile.email) {
                             // Check with backend if user exists
-                            fetch('YOUR_BACKEND_URL/check-user', {
+                            fetch(getBackendUrl('/check-user'), {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify({ email: profile.email })

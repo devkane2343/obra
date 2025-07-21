@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Client Dashboard - FreelanceHub</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module" src="/public/firebase-config.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -390,33 +391,25 @@
         </div>
     </div>
 
-    <script>
-        // Session check and dynamic name insertion
-        (function() {
-            const userStr = sessionStorage.getItem('user');
-            let user;
-            try {
-                user = JSON.parse(userStr);
-            } catch (e) {
-                user = null;
-            }
-            if (!user || !user.userType) {
-                // No valid session, redirect to login
-                window.location.href = '/public/login.html';
-                return;
-            }
-            if (user.userType !== 'client') {
-                // Not a client, redirect to error or login
-                window.location.href = '/public/login.html';
-                return;
-            }
-            // Insert user's name
-            const nameElem = document.getElementById('clientName');
-            if (nameElem && user.name) {
-                nameElem.textContent = user.name;
-            }
-        })();
+    <script type="module">
+        import { auth } from '/public/firebase-config.js';
+        import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js';
 
+        // Check Firebase Auth state
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                // Not logged in, redirect to main page
+                window.location.href = '/public/index.html';
+            } else {
+                // Insert user's name if available
+                const nameElem = document.getElementById('clientName');
+                if (nameElem) {
+                    nameElem.textContent = user.displayName || user.email || 'Client';
+                }
+            }
+        });
+    </script>
+    <script>
         // Mobile menu functionality
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');

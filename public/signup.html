@@ -62,25 +62,6 @@
                 <h1 class="text-3xl font-bold text-primary mb-2">FreelanceHub</h1>
                 <p class="text-gray-600">Create your account to get started</p>
             </div>
-
-            <!-- User Type Toggle -->
-            <div class="glass-effect p-1 rounded-lg flex">
-                <button 
-                    id="clientToggle" 
-                    class="flex-1 py-2 px-4 text-sm font-medium rounded-md transition-all duration-200 bg-primary text-white shadow-sm"
-                    onclick="switchUserType('client')"
-                >
-                    I'm a Client
-                </button>
-                <button 
-                    id="workerToggle" 
-                    class="flex-1 py-2 px-4 text-sm font-medium rounded-md transition-all duration-200 text-gray-500 hover:text-gray-700"
-                    onclick="switchUserType('worker')"
-                >
-                    I'm a Worker
-                </button>
-            </div>
-
             <!-- OAuth Login Buttons -->
             <div class="glass-effect rounded-lg shadow-lg p-6 mb-4 flex flex-col gap-3 fade-in">
                 <button id="googleSignInBtn" type="button" class="w-full flex items-center justify-center gap-2 bg-white border border-gray-300 rounded-md py-2 px-4 font-medium text-gray-700 hover:bg-gray-50 transition-colors shadow-sm">
@@ -409,15 +390,33 @@
             } else {
                 data.specialization = formData.get('specialization');
             }
-            setTimeout(() => {
-                submitText.textContent = 'Account Created!';
+
+            fetch('/api/signup', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+            .then(res => res.json())
+            .then(response => {
+                if (response.success) {
+                    submitText.textContent = 'Account Created!';
+                    loadingSpinner.classList.add('hidden');
+                    setTimeout(() => {
+                        submitText.textContent = 'Create Account';
+                        submitButton.disabled = false;
+                        event.target.reset();
+                        // Optionally redirect or show a message
+                    }, 2000);
+                } else {
+                    throw new Error(response.message || 'Signup failed');
+                }
+            })
+            .catch(err => {
+                submitText.textContent = 'Create Account';
                 loadingSpinner.classList.add('hidden');
-                setTimeout(() => {
-                    submitText.textContent = 'Create Account';
-                    submitButton.disabled = false;
-                    event.target.reset();
-                }, 2000);
-            }, 1500);
+                submitButton.disabled = false;
+                alert('Error: ' + err.message);
+            });
         }
         document.addEventListener('DOMContentLoaded', function() {
             const inputs = document.querySelectorAll('input, select');

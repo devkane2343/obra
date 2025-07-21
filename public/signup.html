@@ -126,7 +126,7 @@
                     provider: result.providerId || (user.providerData[0]?.providerId) || 'google.com'
                 };
                 localStorage.setItem('obraUser', JSON.stringify(session));
-                window.location.href = 'choose-role.html';
+                window.location.href = 'signup2.html';
             } catch (error) {
                 showAuthError(error);
             }

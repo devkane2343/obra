@@ -81,7 +81,7 @@
                     </button>
                     <div class="flex items-center space-x-2">
                         <img src="../worker/icons/worker.png" alt="Profile" class="w-8 h-8 rounded-full">
-                        <span class="text-sm font-medium text-gray-700">Louvic Mesias</span>
+                        <span id="workerNavName" class="text-sm font-medium text-gray-700"></span>
                     </div>
                     <a href="../index.html" class="text-gray-600 hover:text-gray-800 text-sm">Logout</a>
                 </div>
@@ -92,7 +92,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <!-- Welcome Section -->
         <div class="mb-8">
-            <h1 class="text-3xl font-bold text-dark">Welcome back, Louvic!</h1>
+            <h1 class="text-3xl font-bold text-dark">Welcome back, <span id="workerWelcomeName"></span>!</h1>
             <p class="text-gray-600 mt-2">Here's what's happening with your freelance work today.</p>
         </div>
 
@@ -209,7 +209,7 @@
                     <div class="p-6">
                         <div class="text-center mb-4">
                             <img src="/public/worker/icons/worker.png" alt="Profile" class="w-20 h-20 rounded-full mx-auto mb-4">
-                            <h3 class="text-lg font-semibold text-gray-900">Louvic Mesias</h3>
+                            <h3 id="workerProfileName" class="text-lg font-semibold text-gray-900"></h3>
                             <p class="text-gray-600">Graphics and Design</p>
                             <div class="flex items-center justify-center mt-2">
                                 <div class="flex text-yellow-400">
@@ -275,5 +275,23 @@
             </div>
         </div>
     </div>
+    <script type="module">
+        import { auth } from '/public/firebase-config.js';
+        import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js';
+
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                window.location.href = '/public/index.html';
+            } else {
+                const navNameElem = document.getElementById('workerNavName');
+                const welcomeNameElem = document.getElementById('workerWelcomeName');
+                const profileNameElem = document.getElementById('workerProfileName');
+                const displayName = user.displayName || user.email || 'Worker';
+                if (navNameElem) navNameElem.textContent = displayName;
+                if (welcomeNameElem) welcomeNameElem.textContent = displayName;
+                if (profileNameElem) profileNameElem.textContent = displayName;
+            }
+        });
+    </script>
 </body>
 </html>

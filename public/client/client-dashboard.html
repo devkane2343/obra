@@ -97,7 +97,7 @@
                     </button>
                     <div class="flex items-center space-x-2">
                         <img src="../client/icons/client.png" alt="Profile" class="w-8 h-8 rounded-full">
-                        <span class="text-sm font-medium text-gray-700">Rhenz Estrera</span>
+                        <span id="clientNavName" class="text-sm font-medium text-gray-700"></span>
                     </div>
                     <a href="../login.html" class="text-gray-600 hover:text-gray-800 text-sm">Logout</a>
                 </div>
@@ -119,7 +119,7 @@
                 <div class="flex items-center justify-between">
                     <div class="flex items-center space-x-2">
                         <img src="../client/icons/client.png" alt="Profile" class="w-8 h-8 rounded-full">
-                        <span class="text-sm font-medium text-gray-700">Rhenz Estrera</span>
+                        <span id="clientMobileNavName" class="text-sm font-medium text-gray-700"></span>
                     </div>
                     <a href="/public/login.html" class="text-gray-600 hover:text-gray-800 text-sm">Logout</a>
                 </div>
@@ -403,9 +403,12 @@
             } else {
                 // Insert user's name if available
                 const nameElem = document.getElementById('clientName');
-                if (nameElem) {
-                    nameElem.textContent = user.displayName || user.email || 'Client';
-                }
+                const navNameElem = document.getElementById('clientNavName');
+                const mobileNavNameElem = document.getElementById('clientMobileNavName');
+                const displayName = user.displayName || user.email || 'Client';
+                if (nameElem) nameElem.textContent = displayName;
+                if (navNameElem) navNameElem.textContent = displayName;
+                if (mobileNavNameElem) mobileNavNameElem.textContent = displayName;
             }
         });
     </script>

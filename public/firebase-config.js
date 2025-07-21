@@ -2,6 +2,7 @@
 // Replace the below config with your actual Firebase project config
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js"; // ✅ Add this
 
 const firebaseConfig = {
   apiKey: "AIzaSyDdU55TPZVf-Ok-jgusZq_BBuVF1DDwP_k",
@@ -16,5 +17,6 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app); // ✅ Firestore initialized here
 
-export { auth }; 
+export { auth, db }; // ✅ Export both
